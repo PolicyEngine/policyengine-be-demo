@@ -69,7 +69,7 @@
 
 <section class="slide" style="padding:34px 46px 44px">
   <div class="grow" style="justify-content:flex-start">
-    <iframe src="constellation.html" title="The constellation" style="border:0;width:100%;height:100%;min-height:0" loading="eager"></iframe>
+    <iframe data-rel="constellation.html" title="The constellation" style="border:0;width:100%;height:100%;min-height:0" loading="eager"></iframe>
   </div>
   <div class="footer">societalcomputation.org — the family, exactly as it stands</div>
 </section>
@@ -232,6 +232,9 @@ function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,j)=
 addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key))show(i+1);if(['ArrowLeft','PageUp'].includes(e.key))show(i-1)});
 addEventListener('click',e=>{show(e.clientX>innerWidth/3?i+1:i-1)});
 show(0);
+const cf=document.querySelector('iframe[data-rel]');
+const base=location.pathname.endsWith('/')?location.href:location.href.split('?')[0]+'/';
+cf.src=new URL(cf.dataset.rel, base).href;
 </script>
 </body>
 </html>
