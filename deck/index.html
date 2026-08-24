@@ -146,6 +146,68 @@
   </ul></div>
 </section>
 
+
+<section class="slide">
+  <div class="grow">
+    <div class="kicker">Appendix</div>
+    <h1>The substance</h1>
+    <div class="sub">Chronicle facts · the calibration surface · the encoded policy scope · the full cross-engine table. Every number verifiable in the open repos.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Chronicle — the fact layer for Belgium</h2>
+  <div class="grow"><ul class="big" style="font-size:19px;gap:13px">
+    <li><b>Doctrine:</b> a calibration target is a <b>sum of Chronicle facts</b> — published administrative and national-accounts records, each with source, period, unit, and provenance class. Surveys are validation-only. Aging is a <b>declared ratio of two published facts</b> (FPB outlook pairs), never a guessed uprate.</li>
+    <li><b>Belgian packages, in the bundle now:</b> Statbel fiscal income distribution 2023 — <span class="num">14,600</span> facts (101 income classes × declarations and amounts, national and per region; decile and percentile tax masses with published band bounds; declaration types; professional-income composition) · FPB Economic Outlook 2026–2031 (June 2026) — <span class="num">1,000</span> facts across T01/T06/T07/T11/T17/T24 · Statbel population structure 2025 and 2026 · ONSS contributions · ONEM unemployment · SFPD pension caseload · Eurostat tax and social-protection aggregates and household accounts · NBB disposable income · JRC EUROMOD country-report statistics — <span class="num">90</span> facts.</li>
+    <li><b>Scale:</b> the full Chronicle bundle spans <span class="num">171,836</span> facts across the US, UK, and Belgium — one ledger, one contract, per-record provenance enforced by CI.</li>
+  </ul></div>
+  <div class="cite">github.com/PolicyEngine/chronicle — the Belgian 2025 vintages merged this weekend.</div>
+</section>
+
+<section class="slide">
+  <h2>Microcosm-BE v0.5 — the 254-target surface</h2>
+  <div class="grow"><ul class="big" style="font-size:19px;gap:13px">
+    <li><b>Fiscal distribution:</b> <span class="num">202</span> cells — 101 income classes × {declaration counts, net taxable income}, 2023 administrative levels aged to 2025 by declared FPB fact-ratios.</li>
+    <li><b>Tax masses:</b> <span class="num">19</span> cells — decile 1–9 plus percentile 91–100 total tax, with the published band bounds scaled to 2025 on the same declared ratios; declaration types (joint / individual).</li>
+    <li><b>Demographics and programs:</b> 18 age × sex × region cells (NUTS1); ONSS worker contributions; SFPD pension recipients; FPB program totals (unemployment, GRAPA, child benefit, pensions); Eurostat self-employment, movable income, household accounts.</li>
+    <li><b>Discipline:</b> weight-ratio cap 10, fixed seed, effective sample size <span class="num">1,058</span>; one tax concept per measure (the accrual-basis national-accounts tax total was demoted to validation when it conflicted with the enrolled Statbel decile system — the conflict is documented, not averaged away).</li>
+    <li class="red"><b>The regional surface (956 cells) refused to ship:</b> a machine-checked audit proved joint infeasibility for the US donor — seven region × decile tax cells and the couple ceiling — which is precisely the specification for the Belgian donor pool.</li>
+  </ul></div>
+</section>
+
+<section class="slide">
+  <h2>Axiom policy scope for Belgium today</h2>
+  <div class="grow"><ul class="big" style="font-size:19px;gap:12px">
+    <li><b>Personal income tax (CIR 92):</b> brackets and base tax (art. 130), tax-free amounts and family increments (arts. 131–134), communal and agglomeration surcharges (arts. 465–468), the art. 145-series reductions (pension savings, employer shares, home security, development funds, gifts, domestic employees, childcare, adoption, legal-protection insurance), replacement-income reductions and phase-outs (arts. 147/151/152), credits (arts. 289bis/289ter/289ter/1), company-car benefit in kind.</li>
+    <li><b>Social security:</b> employee contributions (art. 38 component rates), the work bonus with its 2025 mid-year regimes, the special contribution.</li>
+    <li><b>Benefits:</b> GRAPA payable amount, social-integration income resource calculation (from the royal decree), child benefit base — with the full regional composition (cohort routing, rank, age and social supplements) encoded and EUROMOD-matched across a 432-case grid, entering on the next corpus release.</li>
+    <li><b>Counted:</b> <span class="num">123</span> rules over <span class="num">79</span> provisions live in the app; held encodings (dependants detail, art. 171 separate rates, regional child benefit) are named, tested, and waiting on release promotion — the ladder reports where each sits, and nothing claims completeness.</li>
+  </ul></div>
+</section>
+
+<section class="slide">
+  <h2>The full cross-engine table — v0.5, 2025</h2>
+  <div class="grow">
+    <table style="font-size:15.5px">
+      <tr><th>Concept</th><th>Truth 2025</th><th>Axiom</th><th>EUROMOD·Microcosm</th><th>EUROMOD·SILC (JRC)</th><th>Mechanism where it misses</th></tr>
+      <tr><td>Income tax</td><td class="r">€75.8bn</td><td class="r miss">−17.7%</td><td class="r miss">−17.1%</td><td class="r">+2.3%</td><td>concept conflict documented; decile system carries the tax concept</td></tr>
+      <tr><td>Employee SSC</td><td class="r">€21.7bn</td><td class="r">+6.9%</td><td class="r">+6.9%</td><td class="r miss">+33.2%</td><td>—</td></tr>
+      <tr><td>Net taxable income</td><td class="r">€293.7bn</td><td class="r ok">+1.6%</td><td class="r ok">+1.6%</td><td class="r">—</td><td>—</td></tr>
+      <tr><td>Self-employment income</td><td class="r">€43.1bn</td><td class="r ok">+0.5%</td><td class="r ok">+0.5%</td><td class="r miss">−44.9%</td><td>—</td></tr>
+      <tr><td>Movable income</td><td class="r">€40.2bn</td><td class="r ok">−0.1%</td><td class="r ok">−0.1%</td><td class="r">—</td><td>—</td></tr>
+      <tr><td>Pensions</td><td class="r">€71.2bn</td><td class="r ok">+0.1%</td><td class="r ok">+0.1%</td><td class="r miss">−11.8%</td><td>—</td></tr>
+      <tr><td>Pension recipients</td><td class="r">2,674.5k</td><td class="r">+2.9%</td><td class="r">+2.9%</td><td class="r miss">−12.1%</td><td>—</td></tr>
+      <tr><td>Unemployment benefits</td><td class="r">€6.5bn</td><td class="r miss">+84.5%</td><td class="r ok">+0.3%</td><td class="r miss">+79.8%</td><td>Axiom leg uses a first-month proxy construct — named, owned</td></tr>
+      <tr><td>Unemployment recipients</td><td class="r">990.1k</td><td class="r ok">+0.2%</td><td class="r ok">+0.2%</td><td class="r miss">+94.9%</td><td>—</td></tr>
+      <tr><td>Social assistance (RIS)</td><td class="r">€2.2bn</td><td class="r miss">+113.5%</td><td class="r miss">+379.9%</td><td class="r miss">−37.6%</td><td>means test rewired; take-up not yet modelled (rate documented, off)</td></tr>
+      <tr><td>GRAPA</td><td class="r">€1.0bn</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td><td class="r miss">−100.0%</td><td>donor pension distribution too uniform — donor-pool spec item</td></tr>
+      <tr><td>Child benefits</td><td class="r">€8.6bn</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td><td class="r miss">−13.1%</td><td>composition encoded 24 Aug; enters on next corpus release</td></tr>
+    </table>
+    <div class="cite" style="margin-top:14px">Per-case exactness underneath the aggregates: couple PIT at €45k and €60k matched to the cent at the pinned engine (€3,484.26 and €7,548.60); the €30k case's −€813.31 attributed to the art. 289ter/1 credit. 23 policies on the scoreboard, zero unexplained residuals; 558 EUROMOD output columns classified; 13 findings filed upstream.</div>
+  </div>
+</section>
+
 <script>
 const slides=[...document.querySelectorAll('.slide')];let i=0;
 const counter=document.createElement('div');counter.className='counter';document.body.appendChild(counter);
