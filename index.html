@@ -81,7 +81,7 @@
   <div class="wordmark">PolicyEngine <span>Belgium</span></div>
   <div class="tag">prototype · Axiom rules engine · Microcosm-BE v0.5 · 2025 law</div>
 </header>
-<div class="banner"><b>Prototype.</b> Microcosm-BE: synthetic Belgian population calibrated to Belgian administrative and national-accounts targets (sums of Chronicle facts; surveys validation-only). Support records: US survey donor pool, reweighted; a Belgian donor pool is the planned upgrade. Cross-engine agreement is evidence about the encodings. Reform cells below were computed in July 2026 on the pilot worker slice; the population layer has since advanced to <a href="https://microcosm.institute/calibration/dashboard/microcosm?country=be">v0.5</a> — recompute queued.</div>
+<div class="banner"><b>Prototype.</b> Microcosm-BE: synthetic Belgian population calibrated to Belgian administrative and national-accounts targets (sums of Chronicle facts; surveys validation-only). Support records: US survey donor pool, reweighted; a Belgian donor pool is the planned upgrade. Cross-engine agreement is evidence about the encodings. Reform cells computed 24 August on <a href="https://microcosm.institute/calibration/dashboard/microcosm?country=be">Microcosm-BE v0.5</a>: 155 engine-computed cells across 28 statute parameters, verified by isolated re-execution.</div>
 <div class="layout">
   <div class="panel">
     <h2>Policy levers</h2>
@@ -99,6 +99,12 @@
       <label>Communal surcharge <span class="val" id="communalVal"></span></label>
       <input type="range" id="communal" min="0" max="3" step="1">
       <div class="statute">CIR 92 art. 465–468 — flat average of communal additional percentages (baseline 7%)</div>
+    </div>
+    <div class="lever" style="border-top:1px solid var(--border);padding-top:14px">
+      <label>More parameters <span class="val" id="swVal"></span></label>
+      <select id="swParam" style="width:100%;font:inherit;font-size:12.5px;padding:5px;border:1px solid var(--border);border-radius:6px;margin-bottom:6px"><option value="">— choose a parameter (one at a time) —</option></select>
+      <input type="range" id="swRange" min="0" max="0" step="1" disabled>
+      <div class="statute" id="swCite">25 further encoded CIR 92 / work-bonus parameters, swept one at a time from current law</div>
     </div>
     <div class="chips"><span class="chip" id="chipBase">baseline</span><span class="chip" id="chipReform">reform active</span></div>
     <button class="reset" id="reset">Reset to current law</button>
@@ -197,16 +203,46 @@ const BASE={tfa:1,rate:1,communal:2};
 const eur=x=>'€'+Math.round(x).toLocaleString('en-US');
 const eurB=x=>{const b=x/1e9;return (b>=0?'+':'−')+'€'+Math.abs(b).toFixed(2)+'B'};
 const pyf=x=>x===0?'0.0':String(x);
-let D=null, st={...BASE}, gross=45000, tab='society';
-fetch(new URL('data.json', location.href.endsWith('/')?location.href:location.href+'/')).then(r=>r.json()).then(d=>{D=d;render()});
+let D=null, st={...BASE}, sweep=null, gross=45000, tab='society';
+fetch(new URL('data_v2.json', location.href.endsWith('/')?location.href:location.href+'/')).then(r=>r.json()).then(d=>{D=d;initSweeps();render()});
+function metaOf(k){return D.parameter_metadata.find(m=>m.key===k)}
+function fmtVal(m,v){return m.kind==='decimal'?(v*100).toFixed(v*100%1?2:0)+'%':'\u20ac'+Math.round(v).toLocaleString('en-US')}
+function initSweeps(){
+  const sel=document.getElementById('swParam');
+  const fams={};
+  D.parameter_metadata.forEach(m=>{(fams[m.family]=fams[m.family]||[]).push(m)});
+  for(const [fam,list] of Object.entries(fams)){
+    const og=document.createElement('optgroup'); og.label=fam.replace(/_/g,' ');
+    list.forEach(m=>{const o=document.createElement('option');o.value=m.key;o.textContent=m.label;og.appendChild(o)});
+    sel.appendChild(og);
+  }
+  sel.addEventListener('change',()=>{
+    const k=sel.value, r=document.getElementById('swRange');
+    if(!k){sweep=null;r.disabled=true;r.min=0;r.max=0;document.getElementById('swVal').textContent='';document.getElementById('swCite').textContent='25 further encoded CIR 92 / work-bonus parameters, swept one at a time from current law';render();return}
+    const m=metaOf(k), pts=D.sweeps[k];
+    st={...BASE}; for(const id of ['tfa','rate','communal'])document.getElementById(id).value=BASE[id];
+    const bi=pts.findIndex(p=>Math.abs(p.value-m.baseline)<1e-12);
+    r.disabled=false;r.min=0;r.max=pts.length-1;r.value=bi>=0?bi:0;
+    sweep={key:k,idx:+r.value};
+    document.getElementById('swCite').textContent=m.provision+' \u00b7 '+m.source_module;
+    render();
+  });
+  document.getElementById('swRange').addEventListener('input',e=>{if(sweep){sweep.idx=+e.target.value;render()}});
+}
 const key=s=>`t${TFA[s.tfa]}_r${pyf(RATE[s.rate])}_c${pyf(COM[s.communal])}`;
-function cell(s){return D.cells[key(s)]}
+function cell(s){
+  if(sweep){const m=metaOf(sweep.key),pts=D.sweeps[sweep.key];
+    if(Math.abs(pts[sweep.idx].value-m.baseline)<1e-12)return D.cells[D.baseline_key];
+    return pts[sweep.idx].cell}
+  return D.cells[key(s)]}
 function render(){
   if(!D)return;
   document.getElementById('tfaVal').textContent=eur(TFA[st.tfa]);
   document.getElementById('rateVal').textContent=(RATE[st.rate]*100).toFixed(0)+'%';
   document.getElementById('communalVal').textContent=(COM[st.communal]*100).toFixed(1)+'%';
-  const isBase=st.tfa===BASE.tfa&&st.rate===BASE.rate&&st.communal===BASE.communal;
+  if(sweep){const m=metaOf(sweep.key),v=D.sweeps[sweep.key][sweep.idx].value;
+    document.getElementById('swVal').textContent=fmtVal(m,v)+(Math.abs(v-m.baseline)<1e-12?' (current law)':' (current: '+fmtVal(m,m.baseline)+')')}
+  const isBase=(st.tfa===BASE.tfa&&st.rate===BASE.rate&&st.communal===BASE.communal)&&(!sweep||Math.abs(D.sweeps[sweep.key][sweep.idx].value-metaOf(sweep.key).baseline)<1e-12);
   document.getElementById('chipBase').className='chip'+(isBase?' on':'');
   document.getElementById('chipReform').className='chip'+(!isBase?' on':'');
   const c=cell(st), b=cell(BASE);
@@ -282,9 +318,9 @@ function drawCurve(c,b){
 }
 for(const id of ['tfa','rate','communal']){
   const inp=document.getElementById(id); inp.value=BASE[id];
-  inp.addEventListener('input',()=>{st[id]=+inp.value;render()});
+  inp.addEventListener('input',()=>{st[id]=+inp.value;if(sweep){sweep=null;document.getElementById('swParam').value='';const r=document.getElementById('swRange');r.disabled=true;document.getElementById('swVal').textContent='';document.getElementById('swCite').textContent='25 further encoded CIR 92 / work-bonus parameters, swept one at a time from current law'}render()});
 }
-document.getElementById('reset').onclick=()=>{st={...BASE};for(const id of ['tfa','rate','communal'])document.getElementById(id).value=BASE[id];render()};
+document.getElementById('reset').onclick=()=>{st={...BASE};sweep=null;document.getElementById('swParam').value='';const r=document.getElementById('swRange');r.disabled=true;document.getElementById('swVal').textContent='';for(const id of ['tfa','rate','communal'])document.getElementById(id).value=BASE[id];render()};
 document.getElementById('gross').addEventListener('input',e=>{gross=+e.target.value;if(D)renderHH(cell(st),cell(BASE))});
 document.getElementById('tabSociety').onclick=()=>{tab='society';document.getElementById('society').style.display='';document.getElementById('household').style.display='none';document.getElementById('tabSociety').className='on';document.getElementById('tabHousehold').className=''};
 document.getElementById('tabHousehold').onclick=()=>{tab='household';document.getElementById('society').style.display='none';document.getElementById('household').style.display='';document.getElementById('tabHousehold').className='on';document.getElementById('tabSociety').className=''};
