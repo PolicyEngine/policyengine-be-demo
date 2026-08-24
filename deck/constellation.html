@@ -1,0 +1,681 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=Jost:wght@500&family=Urbanist:wght@400&family=Newsreader:opsz,wght@6..72,600&family=Public+Sans:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF7; --ink:#1C1E21; --muted:#6B6E76; --rule:#D8D6D0; --madder:#A33B2A;
+  --axiom:#B45309; --microcosm:#3E7A5E; --ledger:#33547D;
+  --pe:#2C7A7B; --thesis:#A94E80; --corollary:#635B9C;
+  --serif:"STIX Two Text",Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --paper:#131417; --ink:#E8E6E1; --muted:#8B8E96; --rule:#33353B; --madder:#C25B48;
+    --axiom:#D97706; --microcosm:#5FA588; --ledger:#7CA1D6;
+    --pe:#4FD1C5; --thesis:#C96B9C; --corollary:#8F87C9;
+  }
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:17px}
+body{
+  background:var(--paper); color:var(--ink); font-family:var(--serif);
+  line-height:1.5; -webkit-font-smoothing:antialiased;
+  min-height:100svh; display:flex; flex-direction:column; align-items:center;
+  padding:clamp(1.2rem,4vw,3rem);
+}
+::selection{background:var(--madder); color:var(--paper)}
+
+header{width:min(56rem,100%); display:flex; justify-content:space-between; align-items:baseline; gap:1rem; flex-wrap:wrap; margin-bottom:clamp(1.6rem,4vh,2.8rem)}
+header h1{font-size:1rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase}
+header h1 .tf{color:var(--madder)}
+header h1 img{display:block; width:min(340px,100%); height:auto}
+.tag{font-family:var(--mono); font-size:.66rem; letter-spacing:.06em; color:var(--muted); border:1px dashed var(--rule); padding:.3rem .55rem; border-radius:2px}
+
+/* the steward frame — dashed until the team inks it */
+.frame{
+  width:min(56rem,100%);
+  border:1.5px dashed var(--muted); border-radius:3px;
+  padding:clamp(1.2rem,3.5vw,2.6rem) clamp(1rem,3vw,2.4rem) clamp(1rem,3vw,2rem);
+  position:relative;
+}
+.frame-label{
+  position:absolute; top:-0.72rem; left:clamp(1rem,3vw,2.2rem);
+  background:var(--paper); padding:0 .6rem;
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; color:var(--muted);
+}
+.frame-label b{color:var(--ink); font-weight:500}
+
+.proof{position:relative; padding-right:clamp(2.4rem,5.5vw,3.6rem)}
+.tier-label{
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:.9rem;
+}
+/* each tier label aligns with its own row's left edge */
+.tier-label:has(+ .row.apps){width:min(19rem,100%); margin-inline:auto}
+.tier-label:has(+ .row.engines){width:min(34rem,100%); margin-inline:auto}
+.row{display:grid; gap:clamp(.8rem,2.5vw,1.6rem)}
+.row.substrates{grid-template-columns:repeat(3,1fr)}
+.row.engines{grid-template-columns:repeat(2,1fr); width:min(34rem,100%); margin-inline:auto}
+.row.apps{grid-template-columns:1fr; width:min(19rem,100%); margin-inline:auto}
+
+.unit{padding:.2rem 0}
+.unit .name{
+  font-weight:600; letter-spacing:.16em; text-transform:uppercase; font-size:.92rem;
+  color:var(--c);
+}
+.unit .role{
+  display:block; font-family:var(--mono); font-size:.68rem; color:var(--muted);
+  margin-top:.34rem; letter-spacing:.02em;
+}
+.unit .status{
+  display:block; font-family:var(--mono); font-size:.6rem; letter-spacing:.08em;
+  margin-top:.5rem; color:var(--muted);
+}
+.unit.proposed .name{border-bottom:1px dashed var(--c); padding-bottom:.1rem}
+.unit.live .status::before{content:"● "; color:var(--c)}
+.unit.proposed .status::before{content:"◌ "; color:var(--c)}
+
+.unit .mark{display:flex; align-items:flex-end; height:2.7rem; margin-bottom:.55rem; text-decoration:none; color:inherit}
+.unit.corollary .mark{height:auto; min-height:0}
+a.mark{transition:opacity .15s ease}
+a.mark:hover{opacity:.75}
+header h1 a{display:block}
+.unit .mark img,.unit .mark svg{display:block; height:auto}
+.unit.axiom .mark img{width:7.8rem}
+.unit.pe .mark img{width:8.2rem}
+.unit.thesis .mark{align-items:center; gap:.6rem}
+.unit.thesis .mark img{width:1.9rem; height:1.9rem}
+.unit.microcosm .mark svg{width:9.2rem}
+.unit.chronicle .mark svg{width:10.6rem}
+.unit.corollary .mark svg{width:6.8rem; margin:-.35rem 0 -.4rem -.36rem}
+.unit .mark .brandname{font-family:"Newsreader",Georgia,serif; font-weight:600; font-size:1.35rem; letter-spacing:-.01em; line-height:1; color:var(--ink)}
+.axiom{--c:var(--axiom)} .microcosm{--c:var(--microcosm)} .ledger{--c:var(--ledger)} .chronicle{--c:var(--ledger)}
+.pe{--c:var(--pe)} .thesis{--c:var(--thesis)} .corollary{--c:var(--corollary)}
+
+/* inference lines */
+.inference{
+  border:0; border-top:1.5px solid var(--ink); position:relative; overflow:visible;
+  margin:clamp(1.4rem,3.5vh,2.2rem) 0 clamp(1.2rem,3vh,1.9rem);
+  transform-origin:left center;
+}
+.inference::after{
+  content:"∴"; position:absolute; right:0; top:-.66rem;
+  color:var(--madder); font-size:1.3rem; line-height:1;
+  background:var(--paper); padding:0 .05rem 0 .45rem;
+}
+.inference.second{width:min(34rem,100%); margin-inline:auto}
+.inference .why{
+  position:absolute; left:0; top:.45rem;
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.05em; color:var(--muted);
+}
+
+/* the score edge — the one drawn edge, in its own lane inside the frame */
+.score-edge{
+  position:absolute; top:0; right:0; height:100%; width:clamp(1.7rem,4vw,2.6rem);
+  pointer-events:none;
+}
+.score-edge path{
+  fill:none; stroke:var(--madder); stroke-width:1.5; vector-effect:non-scaling-stroke;
+}
+.score-head{
+  position:absolute; right:calc(clamp(1.7rem,4vw,2.6rem) * .65); top:55%;
+  transform:translateY(-52%);
+  color:var(--madder); font-size:.62rem; line-height:1;
+}
+.score-note{
+  position:absolute; right:-.55rem; top:60%;
+  writing-mode:vertical-rl;
+  font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; color:var(--madder);
+  background:var(--paper); padding-block:.5rem;
+  white-space:nowrap;
+}
+
+/* the flows toggle — the interlock drawn onto the proof itself */
+.flows-toggle{position:absolute; top:-0.78rem; right:clamp(1rem,3vw,2.2rem); background:var(--paper);
+  border:1px dashed var(--rule); color:var(--muted); font-family:var(--mono); font-size:.62rem;
+  letter-spacing:.08em; padding:.26rem .6rem; border-radius:2px; cursor:pointer}
+.flows-toggle:hover, .frame.flows-on .flows-toggle{color:var(--madder); border-color:var(--madder)}
+.flow-overlay{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0; transition:opacity .3s; overflow:visible}
+.frame.flows-on .flow-overlay{opacity:1}
+.flow-overlay .fedge path{fill:none; stroke:var(--muted); stroke-width:1.1; opacity:.6; marker-end:url(#fah); transition:opacity .18s}
+.flow-overlay .fedge text{font-family:var(--mono); font-size:10px; fill:var(--muted); opacity:.9; text-anchor:middle; transition:opacity .18s; paint-order:stroke; stroke:var(--paper); stroke-width:3px; stroke-linejoin:round}
+.flow-overlay .fedge.score path{stroke:var(--madder); opacity:.9; marker-end:url(#fahr)}
+.flow-overlay .fedge.score text{fill:var(--madder)}
+.flow-overlay .fedge.plan path{stroke-dasharray:4 3}
+.flow-overlay .fedge.plan text{font-style:italic}
+.flow-overlay[data-focus] .fedge:not(.on) path{opacity:.06}
+.flow-overlay[data-focus] .fedge:not(.on) text{opacity:.05}
+
+.doctrine{
+  width:min(56rem,100%); margin-top:1rem;
+  font-size:.8rem; color:var(--muted); line-height:1.6; text-wrap:pretty;
+}
+/* the record — every doc expandable in place */
+.record-sec .rec-intro{font-size:.85rem; color:var(--muted); margin:.5rem 0 1rem}
+.rec-g-label{font-family:var(--mono); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:1.7rem 0 .4rem}
+details.rec-doc{border-bottom:1px solid var(--rule)}
+details.rec-doc summary{cursor:pointer; list-style:none; padding:.6rem 1.4rem .6rem 0; position:relative}
+details.rec-doc summary::-webkit-details-marker{display:none}
+details.rec-doc summary::after{content:"+"; position:absolute; right:.2rem; top:.5rem; font-family:var(--mono); color:var(--madder)}
+details.rec-doc[open] summary::after{content:"−"}
+details.rec-doc summary b{font-weight:600; font-size:.92rem}
+details.rec-doc summary .rb{display:block; font-size:.78rem; color:var(--muted); margin-top:.1rem}
+details.rec-doc article{padding:0 0 1.2rem; font-size:.88rem}
+details.rec-doc article h2{font-size:.98rem; margin:1.3rem 0 .5rem}
+details.rec-doc article h3{font-size:.88rem; margin:1rem 0 .4rem}
+details.rec-doc article p, details.rec-doc article li{font-size:.85rem}
+details.rec-doc article blockquote{border-left:2px solid var(--rule); padding-left:.9rem; color:var(--muted)}
+details.rec-doc article pre{overflow-x:auto; background:color-mix(in srgb,var(--muted) 10%,transparent); padding:.7rem .8rem; border-radius:3px; font-size:.74rem}
+.rec-counsel{font-size:.8rem; color:var(--muted)}
+
+.legend{
+  width:min(56rem,100%); margin-top:1.4rem; padding-top:1rem; border-top:1px solid var(--rule);
+  display:flex; gap:1.6rem; flex-wrap:wrap;
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.05em; color:var(--muted);
+}
+.legend .li::before{content:"● "; color:var(--ink)}
+.legend .pr::before{content:"◌ "; color:var(--ink)}
+.legend .sc{color:var(--madder)}
+
+footer{
+  width:min(56rem,100%); margin-top:1.6rem; padding-top:1rem; border-top:1px solid var(--rule);
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  font-size:.72rem; color:var(--muted);
+}
+footer .mono{font-family:var(--mono); font-size:.66rem}
+
+/* ── the proposal ── */
+.packet{width:min(56rem,100%); margin-top:clamp(2rem,5vh,3.2rem); border-top:1px solid var(--rule); padding-top:1.6rem}
+.packet .eyebrow{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--madder); margin-bottom:.5rem}
+.packet h1{font-size:1.6rem; font-weight:600; letter-spacing:-.01em; margin-bottom:.9rem}
+.packet h2{font-size:1.08rem; font-weight:600; margin:2.6rem 0 .9rem; padding-top:1.4rem; border-top:1px solid var(--rule)}
+.packet p,.packet li{font-size:.94rem; line-height:1.66; color:var(--ink); text-wrap:pretty}
+.packet p{margin:.65rem 0}
+.packet ul,.packet ol{margin:.65rem 0 .65rem 1.2rem}
+.packet li{margin:.5rem 0}
+.packet li::marker{color:var(--muted)}
+.packet em{font-style:italic}
+.packet a{color:var(--madder); text-decoration:none; border-bottom:1px solid color-mix(in srgb,var(--madder) 35%,transparent)}
+.packet-toc{display:flex; flex-wrap:wrap; gap:.35rem .5rem; margin:1.1rem 0 .4rem}
+.packet-toc a{font-family:var(--mono); font-size:.64rem; letter-spacing:.04em; color:var(--muted);
+  border:1px solid var(--rule); border-radius:2px; padding:.28rem .5rem; text-decoration:none; transition:color .15s,border-color .15s}
+.packet-toc a:hover{color:var(--madder); border-color:var(--madder)}
+.packet .tablewrap{overflow-x:auto; margin:1rem 0}
+.packet table{border-collapse:collapse; width:100%; font-size:.8rem; line-height:1.55}
+.packet th{font-family:var(--mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);
+  text-align:left; padding:.45rem .6rem .45rem 0; border-bottom:1px solid var(--ink)}
+.packet td{vertical-align:top; padding:.55rem .6rem .55rem 0; border-bottom:1px solid var(--rule)}
+.packet .chip{font-family:var(--mono); font-size:.66rem; letter-spacing:.03em; border:1px solid var(--madder);
+  color:var(--madder); border-radius:2px; padding:.1rem .35rem; white-space:nowrap}
+.packet .callout{border-left:2px solid var(--madder); padding-left:.9rem}
+.packet .boiled{font-size:1.02rem; font-style:italic; border-left:2px solid var(--madder); padding-left:.9rem}
+.packet .harness td:first-child{white-space:nowrap; padding-right:.9rem}
+.packet .harness img,.packet .harness svg{display:inline-block; vertical-align:middle; width:auto}
+.packet .callout-line{display:block; margin-top:.85rem; border-left:2px solid var(--madder); padding-left:.9rem}
+/* program cards */
+.progs{display:grid; gap:.9rem; margin:1.1rem 0}
+.prog{border:1px solid var(--rule); border-left:3px solid var(--h); border-radius:3px; padding:.85rem 1rem}
+.prog-name{font-weight:600; font-size:.95rem; margin-bottom:.6rem; color:var(--h)}
+.prog-phases{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem}
+.phase-k{font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:.3rem}
+.phase-v{font-size:.82rem; line-height:1.55}
+.phase-v p{font-size:.82rem; margin:.3rem 0}
+/* forcing facts */
+.facts{display:grid; gap:.9rem; margin:1rem 0}
+.fact{display:flex; gap:.9rem; border:1px solid var(--rule); border-radius:3px; padding:.85rem 1rem}
+.fact-n{font-family:var(--mono); color:var(--madder); font-size:1.15rem; line-height:1.3}
+.fact p,.fact div{font-size:.9rem; line-height:1.6}
+/* ladder */
+.ladder{display:flex; align-items:stretch; gap:.55rem; flex-wrap:wrap; margin:.7rem 0; font-style:normal}
+.rung{border:1px solid var(--rule); border-radius:3px; padding:.5rem .7rem; font-size:.8rem; font-weight:500; display:flex; flex-direction:column; gap:.25rem; justify-content:center}
+.rung small{font-family:var(--mono); font-size:.6rem; letter-spacing:.03em; color:var(--muted); font-weight:400; max-width:16rem}
+.rung.mid{border-color:var(--madder)}
+.lstep{color:var(--madder); align-self:center; font-family:var(--mono)}
+/* steppers */
+ol.stepper{list-style:none; margin-left:0; counter-reset:step -1}
+ol.stepper.seq{counter-reset:step 0}
+ol.stepper>li{counter-increment:step; position:relative; padding:.15rem 0 .9rem 2.4rem; margin:0; border-left:1px dashed var(--rule); margin-left:.85rem}
+ol.stepper>li:last-child{border-left-color:transparent}
+ol.stepper>li::before{content:counter(step); position:absolute; left:-.95rem; top:0;
+  width:1.8rem; height:1.8rem; border:1px solid var(--muted); border-radius:50%;
+  background:var(--paper); color:var(--ink); font-family:var(--mono); font-size:.75rem;
+  display:flex; align-items:center; justify-content:center}
+ol.stepper.gates>li:first-child::before{border-color:var(--madder); color:var(--madder)}
+/* draft card */
+.draftcard{border:1px dashed var(--muted); border-radius:3px; padding:.9rem 1.1rem; margin:1rem 0}
+.draft-k{font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:.4rem}
+/* folds */
+details.fold summary{cursor:pointer; color:var(--ink); font-size:.9rem; list-style:none; position:relative; padding-left:1.1rem}
+details.fold summary::before{content:"▸"; position:absolute; left:0; color:var(--madder); font-size:.7rem; top:.28em; transition:transform .15s}
+details.fold[open] summary::before{transform:rotate(90deg)}
+details.fold>div{margin-top:.6rem; padding-left:1.1rem; border-left:1px dashed var(--rule)}
+details.fold>div p{font-size:.85rem}
+details.fold.big summary{font-size:.94rem}
+/* mission options */
+li.opt{list-style:none; border:1px solid var(--rule); border-radius:3px; padding:.75rem .9rem; margin:.6rem 0 .6rem -1.2rem}
+li.opt.opt-a{border-color:var(--madder)}
+/* risk levels */
+.riskgrid td:first-child{font-size:.85rem}
+.lvl{font-family:var(--mono); font-size:.62rem; letter-spacing:.05em; padding:.12rem .4rem; border-radius:2px; border:1px solid var(--rule); color:var(--muted); white-space:nowrap}
+.lvl.hi{border-color:var(--madder); color:var(--madder)}
+.lvl.vh{background:var(--madder); border-color:var(--madder); color:var(--paper)}
+.lvl.md{border-color:var(--muted)}
+/* objections accordion */
+.objs{margin:1rem 0}
+details.obj{border-bottom:1px solid var(--rule)}
+details.obj summary{cursor:pointer; list-style:none; padding:.75rem 1.4rem .75rem 0; font-size:.92rem; font-weight:500; position:relative}
+details.obj summary::after{content:"+"; position:absolute; right:.2rem; top:.65rem; font-family:var(--mono); color:var(--madder)}
+details.obj[open] summary::after{content:"−"}
+.obj-a{padding:0 0 1rem; color:var(--ink)}
+.obj-a p{font-size:.88rem}
+/* branches */
+.branches{display:grid; grid-template-columns:repeat(3,1fr); gap:.9rem; margin:1rem 0}
+.branch{border:1px solid var(--rule); border-radius:3px; padding:.85rem 1rem; display:flex; flex-direction:column}
+.branch.pick{border-color:var(--madder)}
+.branch-h{display:flex; align-items:baseline; gap:.5rem; margin-bottom:.4rem}
+.branch-l{font-family:var(--mono); color:var(--madder); font-size:1rem}
+.branch-n{font-weight:600; font-size:.95rem}
+.branch p{font-size:.82rem; line-height:1.55; flex:1}
+.branch-t{font-family:var(--mono); font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-top:.6rem}
+.packet-colophon{margin-top:2.2rem; padding-top:1rem; border-top:1px solid var(--rule); font-size:.78rem; color:var(--muted)}
+.packet-colophon .mono{font-family:var(--mono); font-size:.72rem}
+@media (max-width:46rem){
+  .prog-phases{grid-template-columns:1fr}
+  .branches{grid-template-columns:1fr}
+}
+
+/* load: the proof performs itself; the grade arrives last */
+@media (prefers-reduced-motion:no-preference){
+  .substrates .unit{opacity:0; animation:appear .6s ease forwards}
+  .substrates .unit:nth-child(1){animation-delay:.1s}
+  .substrates .unit:nth-child(2){animation-delay:.22s}
+  .substrates .unit:nth-child(3){animation-delay:.34s}
+  .inference.first{transform:scaleX(0); animation:draw .7s cubic-bezier(.6,0,.2,1) .55s forwards}
+  .engines .unit{opacity:0; animation:appear .6s ease forwards}
+  .engines .unit:nth-child(1){animation-delay:1.15s}
+  .engines .unit:nth-child(2){animation-delay:1.3s}
+  .inference.second{transform:scaleX(0); animation:draw .6s cubic-bezier(.6,0,.2,1) 1.7s forwards}
+  .apps .unit{opacity:0; animation:appear .6s ease forwards; animation-delay:2.2s}
+  .score-edge path{stroke-dasharray:1; stroke-dashoffset:1; animation:trace 1s ease 2.9s forwards}
+  .score-head,.score-note{opacity:0; animation:appear .4s ease 3.7s forwards}
+  @keyframes appear{to{opacity:1}}
+  @keyframes draw{to{transform:scaleX(1)}}
+  @keyframes trace{to{stroke-dashoffset:0}}
+}
+
+@media (max-width:40rem){
+  .frame{padding-top:3rem}
+  .frame-label{line-height:1.5}
+  .row.substrates,.row.engines{grid-template-columns:1fr}
+  .row.engines,.row.apps,.inference.second{width:100%}
+  .score-edge,.score-note,.score-head{display:none}
+  .thesis .status::after{content:" · scored against the record"; color:var(--madder)}
+}
+</style><style>@media (prefers-color-scheme:dark){:root{--paper:#FBFAF7;--ink:#1C1E21;--muted:#6B6E76;--rule:#D8D6D0;--madder:#A33B2A;--axiom:#B45309;--microcosm:#3E7A5E;--ledger:#33547D;--pe:#2C7A7B;--thesis:#A94E80;--corollary:#635B9C}}
+body{padding:1.1rem 1.2rem}</style></head><body>
+<div class="frame">
+  <span class="frame-label"><b>The Foundation for Societal Computation</b> · steward — proposed</span>
+  <button class="flows-toggle" aria-pressed="false">flows · off</button>
+
+  <div class="proof">
+    <svg class="score-edge" viewBox="0 0 20 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M 2 84 L 13 84 L 13 55 L 5 55" pathLength="1"/>
+    </svg>
+    <span class="score-head" aria-hidden="true">◀</span>
+    <span class="score-note">scored against the record</span>
+    <svg class="flow-overlay" aria-hidden="true"><defs>
+      <marker id="fah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 8 4 L 0 8 z" style="fill:var(--muted)"/></marker>
+      <marker id="fahr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 8 4 L 0 8 z" style="fill:var(--madder)"/></marker>
+    </defs><g class="fedges"></g></svg>
+
+    <div class="tier-label">Applications — what to do</div>
+    <div class="row apps">
+      <div class="unit corollary proposed">
+        <a class="mark" href="https://corollary.co" target="_blank" rel="noopener"><svg class="co" viewBox="0 0 540 150" role="img" aria-label="Corollary">
+          <style>.co .co-wd{fill:#1A1830}.co .co-op{fill:#635B9C}@media (prefers-color-scheme:dark){.co .co-wd{fill:#ECEAF6}.co .co-op{fill:#8F87C9}}</style>
+          <rect class="co-op" x="24" y="34" width="9" height="66"/>
+          <rect class="co-op" x="24" y="62.5" width="48" height="9"/>
+          <text class="co-wd" x="102" y="100" font-family="'Public Sans','Helvetica Neue',Arial,sans-serif" font-weight="600" font-size="94" textLength="412" lengthAdjust="spacingAndGlyphs">Corollary</text>
+        </svg></a>
+        <span class="role">products that follow from the rules</span>
+        <span class="status">in reserve · forms at first delivery contract</span>
+      </div>
+    </div>
+
+    <hr class="inference second">
+    <div class="tier-label">Engines — what happens</div>
+    <div class="row engines">
+      <div class="unit pe live">
+        <a class="mark" href="https://policyengine.org" target="_blank" rel="noopener"><picture>
+          <source srcset="https://societalcomputation.org/marks/policyengine-white.svg" media="(prefers-color-scheme: dark)">
+          <img src="https://societalcomputation.org/marks/policyengine-teal.svg" alt="PolicyEngine">
+        </picture></a>
+        <span class="role">axiom × microcosm × dynamics → outcomes</span>
+        <span class="status">live · est. 2021</span>
+      </div>
+      <div class="unit thesis live">
+        <a class="mark" href="https://thesisinstitute.org" target="_blank" rel="noopener"><img src="https://societalcomputation.org/marks/thesis-mark.svg" alt=""><span class="brandname">thesis</span></a>
+        <span class="role">the claim, staked and scored</span>
+        <span class="status">launches Sept 2026</span>
+      </div>
+    </div>
+
+    <hr class="inference first">
+    <div class="tier-label">Substrates — what is · the foundation</div>
+    <div class="row substrates">
+      <div class="unit axiom live">
+        <a class="mark" href="https://axiom.org" target="_blank" rel="noopener"><img src="https://societalcomputation.org/marks/axiom-wordmark-bare.svg" alt="Axiom"></a>
+        <span class="role">the law, encoded</span>
+        <span class="status">live · axiom.org</span>
+      </div>
+      <div class="unit chronicle live">
+        <a class="mark" href="https://chronicle.institute" target="_blank" rel="noopener"><svg class="chr" viewBox="-24 -759 6162 818" role="img" aria-label="CHRONICLE">
+          <style>.chr .chr-ink{fill:#131B26}.chr .chr-op{stroke:#33547D;fill:none;stroke-linecap:round}@media (prefers-color-scheme:dark){.chr .chr-ink{fill:#E7EDF5}.chr .chr-op{stroke:#7CA1D6}}</style>
+          <g class="chr-ink" font-family="Jost,'Century Gothic','Avenir Next',Futura,sans-serif" font-size="1000" font-weight="500">
+            <text x="0" y="0">C</text>
+            <text x="751" y="0">H</text>
+            <text x="1555" y="0">R</text>
+            <text x="3073" y="0">N</text>
+            <text x="3916" y="0">I</text>
+            <text x="4251" y="0">C</text>
+            <text x="5002" y="0">L</text>
+            <text x="5543" y="0">E</text>
+          </g>
+          <g class="chr-op" stroke-width="88">
+            <circle cx="2611.5" cy="-356.5" r="312.5"/>
+            <line x1="2611.5" y1="-356.5" x2="2454.54" y2="-314.44"/>
+            <line x1="2611.5" y1="-356.5" x2="2611.5" y2="-112.75"/>
+          </g>
+        </svg></a>
+        <span class="role">the record, witnessed</span>
+        <span class="status">live · chronicle.institute</span>
+      </div>
+      <div class="unit microcosm proposed">
+        <a class="mark" href="https://microcosm.institute" target="_blank" rel="noopener"><svg class="mc" viewBox="-16 -690 5245 726" role="img" aria-label="microcosm">
+          <style>.mc .mc-i{fill:#17251D}.mc .mc-w{fill:#3E7A5E}@media (prefers-color-scheme:dark){.mc .mc-i{fill:#E6EFE9}.mc .mc-w{fill:#5FA588}}</style>
+          <g text-anchor="middle" font-family="Urbanist,'Avenir Next','Century Gothic',Futura,sans-serif" font-size="1000" font-weight="400">
+            <text class="mc-i" x="444.25" y="0" fill-opacity=".75">m</text>
+            <text class="mc-i" x="1023.5" y="0" fill-opacity=".83">i</text>
+            <text class="mc-i" x="1413.25" y="0" fill-opacity=".90">c</text>
+            <text class="mc-i" x="1886.75" y="0" fill-opacity=".96">r</text>
+            <text class="mc-i" x="2385.5" y="0">o</text>
+            <text class="mc-i" x="2960.25" y="0" fill-opacity=".96">c</text>
+            <text class="mc-i" x="3535" y="0" fill-opacity=".90">o</text>
+            <text class="mc-i" x="4069.75" y="0" fill-opacity=".83">s</text>
+            <text class="mc-i" x="4768.75" y="0" fill-opacity=".75">m</text>
+          </g>
+          <circle class="mc-w" cx="2385.5" cy="-251" r="77"/>
+        </svg></a>
+        <span class="role">the economy in miniature</span>
+        <span class="status">rename proposed · working name Populace</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="doctrine">
+  The givens and claims and consequences are, together, a theory; the miniature, the record, and the machines are its model and its check.
+  Engines consume substrates through the same public pinned artifacts available to anyone — and the one red edge is the point:
+  claims are scored against the witnessed record. A proof that grades itself — read from the foundation up.
+</p>
+
+<script>
+(function () {
+  var frame = document.querySelector(".frame");
+  var proof = document.querySelector(".proof");
+  var overlay = document.querySelector(".flow-overlay");
+  var btn = document.querySelector(".flows-toggle");
+  if (!frame || !proof || !overlay || !btn) return;
+  var FLOWS = [
+    { a: "axiom", b: "pe", label: "the rules, pinned", bend: 28, lt: 0.38, lo: 14 },
+    { a: "axiom", b: "thesis", label: "claim IDs", bend: 46, lt: 0.32 },
+    { a: "axiom", b: "corollary", label: "the conformance target", bend: -200, lt: 0.12, lo: -14 },
+    { a: "microcosm", b: "pe", label: "the miniature", bend: 22, lt: 0.5 },
+    { a: "microcosm", b: "thesis", label: "the miniature", bend: -22, lt: 0.5 },
+    { a: "pe", b: "thesis", label: "simulations", bend: -46, lt: 0.74, lo: -15 },
+    { a: "chronicle", b: "thesis", label: "first prints — the grade", bend: -30, cls: "score", lt: 0.5 },
+    { a: "chronicle", b: "microcosm", label: "calibration targets", bend: -52, lt: 0.55, lo: -15 },
+    { a: "chronicle", b: "corollary", label: "the record", bend: 200, lt: 0.22 },
+    { a: "axiom", b: "chronicle", label: "concept definitions — planned", bend: 132, lt: 0.5, lo: 16 }
+  ];
+  function markOf(key) {
+    var u = proof.querySelector(".unit." + key + " .mark");
+    return u || proof.querySelector(".unit." + key);
+  }
+  function markRect(key) {
+    var u = markOf(key);
+    var kids = u.children.length ? u.children : [u];
+    var l = Infinity, r = -Infinity, tp = Infinity, bt = -Infinity;
+    Array.prototype.forEach.call(kids, function (k) {
+      var kr = k.getBoundingClientRect();
+      if (!kr.width) return;
+      l = Math.min(l, kr.left); r = Math.max(r, kr.right);
+      tp = Math.min(tp, kr.top); bt = Math.max(bt, kr.bottom);
+    });
+    if (l === Infinity) return u.getBoundingClientRect();
+    return { left: l, right: r, top: tp, bottom: bt, width: r - l, height: bt - tp };
+  }
+  function draw() {
+    var pr = proof.getBoundingClientRect();
+    overlay.setAttribute("viewBox", "0 0 " + pr.width + " " + pr.height);
+    var g = overlay.querySelector(".fedges");
+    g.innerHTML = "";
+    var obstacles = [];
+    proof.querySelectorAll(".unit .mark, .unit .role, .unit .status, .tier-label").forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (!r.width) return;
+      obstacles.push({ l: r.left - pr.left - 4, r: r.right - pr.left + 4, t: r.top - pr.top - 3, b: r.bottom - pr.top + 3 });
+    });
+    FLOWS.forEach(function (f) {
+      if (!markOf(f.a) || !markOf(f.b)) return;
+      var ra = markRect(f.a), rb = markRect(f.b);
+      var ax = ra.left - pr.left + ra.width / 2, ay = ra.top - pr.top + ra.height / 2;
+      var bx = rb.left - pr.left + rb.width / 2, by = rb.top - pr.top + rb.height / 2;
+      var dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy) || 1;
+      var nx = -dy / len, ny = dx / len;
+      var cx2 = (ax + bx) / 2 + nx * f.bend, cy2 = (ay + by) / 2 + ny * f.bend;
+      function boundary(r, cx, cy, tx, ty, pad) {
+        var ex = tx - cx, ey = ty - cy;
+        if (!ex && !ey) return [cx, cy];
+        var sx = ex !== 0 ? (r.width / 2 + pad) / Math.abs(ex) : Infinity;
+        var sy = ey !== 0 ? (r.height / 2 + pad) / Math.abs(ey) : Infinity;
+        var s = Math.min(sx, sy, 0.5);
+        return [cx + ex * s, cy + ey * s];
+      }
+      var pa = boundary(ra, ax, ay, cx2, cy2, 6), pb = boundary(rb, bx, by, cx2, cy2, 9);
+      var ge = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      ge.setAttribute("class", "fedge" + (f.cls ? " " + f.cls : ""));
+      ge.setAttribute("data-ends", f.a + " " + f.b);
+      var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", "M " + pa[0] + " " + pa[1] + " Q " + cx2 + " " + cy2 + " " + pb[0] + " " + pb[1]);
+      var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      var lt = f.lt == null ? 0.5 : f.lt, lo = f.lo == null ? 12 : f.lo;
+      var w = f.label.length * 6.2, h = 12;
+      function spot(tt, oo) {
+        var omt = 1 - tt;
+        var qx = omt * omt * pa[0] + 2 * omt * tt * cx2 + tt * tt * pb[0];
+        var qy = omt * omt * pa[1] + 2 * omt * tt * cy2 + tt * tt * pb[1];
+        return [qx + nx * oo, qy + ny * oo + 3];
+      }
+      function clear(pt) {
+        var r = { l: pt[0] - w / 2, r: pt[0] + w / 2, t: pt[1] - h, b: pt[1] + 2 };
+        return !obstacles.some(function (o) {
+          return r.l < o.r && r.r > o.l && r.t < o.b && r.b > o.t;
+        });
+      }
+      var tries = [[lt, lo], [lt, -lo], [lt + 0.12, lo], [lt - 0.12, lo], [lt + 0.12, -lo],
+                   [lt - 0.12, -lo], [lt + 0.24, lo * 1.6], [lt - 0.24, lo * 1.6], [lt, lo * 2.2],
+                   [lt, -lo * 2.2], [lt + 0.2, lo * 3], [lt - 0.2, lo * 3], [lt, -lo * 3.2], [lt, lo * 3.6], [lt, lo * 5], [lt, -lo * 5]];
+      var pt = spot(lt, lo);
+      for (var i = 0; i < tries.length; i++) {
+        var cand = spot(Math.min(0.9, Math.max(0.1, tries[i][0])), tries[i][1]);
+        if (clear(cand)) { pt = cand; break; }
+      }
+      obstacles.push({ l: pt[0] - w / 2, r: pt[0] + w / 2, t: pt[1] - h, b: pt[1] + 2 });
+      text.setAttribute("x", pt[0]); text.setAttribute("y", pt[1]);
+      text.textContent = f.label;
+      ge.appendChild(path); ge.appendChild(text); g.appendChild(ge);
+    });
+  }
+  btn.addEventListener("click", function () {
+    var on = frame.classList.toggle("flows-on");
+    btn.setAttribute("aria-pressed", on);
+    btn.textContent = on ? "flows · on" : "flows · off";
+    if (on) draw();
+  });
+  var t0;
+  window.addEventListener("resize", function () {
+    clearTimeout(t0);
+    t0 = setTimeout(function () { if (frame.classList.contains("flows-on")) draw(); }, 150);
+  });
+  proof.querySelectorAll(".unit").forEach(function (u) {
+    var key = ["axiom", "microcosm", "chronicle", "pe", "thesis", "corollary"].find(function (k) { return u.classList.contains(k); });
+    if (!key) return;
+    u.addEventListener("mouseenter", function () {
+      if (!frame.classList.contains("flows-on")) return;
+      overlay.setAttribute("data-focus", key);
+      overlay.querySelectorAll(".fedge").forEach(function (e) {
+        e.classList.toggle("on", e.getAttribute("data-ends").split(" ").indexOf(key) >= 0);
+      });
+    });
+    u.addEventListener("mouseleave", function () {
+      overlay.removeAttribute("data-focus");
+      overlay.querySelectorAll(".fedge.on").forEach(function (e) { e.classList.remove("on"); });
+    });
+  });
+})();
+</script>
+
+<div class="legend">
+  <span class="li">live</span>
+  <span class="pr">proposed / in reserve</span>
+  <span class="sc">— the score edge (the only drawn edge)</span>
+  <span>UK affiliate mirrors the family, no form word</span>
+  <span>all marks canonical — Chronicle joined 2026-08-06</span>
+</div>
+
+
+<script>
+(function () {
+  var frame = document.querySelector(".frame");
+  var proof = document.querySelector(".proof");
+  var overlay = document.querySelector(".flow-overlay");
+  var btn = document.querySelector(".flows-toggle");
+  if (!frame || !proof || !overlay || !btn) return;
+  var FLOWS = [
+    { a: "axiom", b: "pe", label: "the rules, pinned", bend: 28, lt: 0.38, lo: 14 },
+    { a: "axiom", b: "thesis", label: "claim IDs", bend: 46, lt: 0.32 },
+    { a: "axiom", b: "corollary", label: "the conformance target", bend: -200, lt: 0.12, lo: -14 },
+    { a: "microcosm", b: "pe", label: "the miniature", bend: 22, lt: 0.5 },
+    { a: "microcosm", b: "thesis", label: "the miniature", bend: -22, lt: 0.5 },
+    { a: "pe", b: "thesis", label: "simulations", bend: -46, lt: 0.74, lo: -15 },
+    { a: "chronicle", b: "thesis", label: "first prints — the grade", bend: -30, cls: "score", lt: 0.5 },
+    { a: "chronicle", b: "microcosm", label: "calibration targets", bend: -52, lt: 0.55, lo: -15 },
+    { a: "chronicle", b: "corollary", label: "the record", bend: 200, lt: 0.22 },
+    { a: "axiom", b: "chronicle", label: "concept definitions — planned", bend: 132, lt: 0.5, lo: 16 }
+  ];
+  function markOf(key) {
+    var u = proof.querySelector(".unit." + key + " .mark");
+    return u || proof.querySelector(".unit." + key);
+  }
+  function markRect(key) {
+    var u = markOf(key);
+    var kids = u.children.length ? u.children : [u];
+    var l = Infinity, r = -Infinity, tp = Infinity, bt = -Infinity;
+    Array.prototype.forEach.call(kids, function (k) {
+      var kr = k.getBoundingClientRect();
+      if (!kr.width) return;
+      l = Math.min(l, kr.left); r = Math.max(r, kr.right);
+      tp = Math.min(tp, kr.top); bt = Math.max(bt, kr.bottom);
+    });
+    if (l === Infinity) return u.getBoundingClientRect();
+    return { left: l, right: r, top: tp, bottom: bt, width: r - l, height: bt - tp };
+  }
+  function draw() {
+    var pr = proof.getBoundingClientRect();
+    overlay.setAttribute("viewBox", "0 0 " + pr.width + " " + pr.height);
+    var g = overlay.querySelector(".fedges");
+    g.innerHTML = "";
+    var obstacles = [];
+    proof.querySelectorAll(".unit .mark, .unit .role, .unit .status, .tier-label").forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (!r.width) return;
+      obstacles.push({ l: r.left - pr.left - 4, r: r.right - pr.left + 4, t: r.top - pr.top - 3, b: r.bottom - pr.top + 3 });
+    });
+    FLOWS.forEach(function (f) {
+      if (!markOf(f.a) || !markOf(f.b)) return;
+      var ra = markRect(f.a), rb = markRect(f.b);
+      var ax = ra.left - pr.left + ra.width / 2, ay = ra.top - pr.top + ra.height / 2;
+      var bx = rb.left - pr.left + rb.width / 2, by = rb.top - pr.top + rb.height / 2;
+      var dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy) || 1;
+      var nx = -dy / len, ny = dx / len;
+      var cx2 = (ax + bx) / 2 + nx * f.bend, cy2 = (ay + by) / 2 + ny * f.bend;
+      function boundary(r, cx, cy, tx, ty, pad) {
+        var ex = tx - cx, ey = ty - cy;
+        if (!ex && !ey) return [cx, cy];
+        var sx = ex !== 0 ? (r.width / 2 + pad) / Math.abs(ex) : Infinity;
+        var sy = ey !== 0 ? (r.height / 2 + pad) / Math.abs(ey) : Infinity;
+        var s = Math.min(sx, sy, 0.5);
+        return [cx + ex * s, cy + ey * s];
+      }
+      var pa = boundary(ra, ax, ay, cx2, cy2, 6), pb = boundary(rb, bx, by, cx2, cy2, 9);
+      var ge = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      ge.setAttribute("class", "fedge" + (f.cls ? " " + f.cls : ""));
+      ge.setAttribute("data-ends", f.a + " " + f.b);
+      var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", "M " + pa[0] + " " + pa[1] + " Q " + cx2 + " " + cy2 + " " + pb[0] + " " + pb[1]);
+      var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      var lt = f.lt == null ? 0.5 : f.lt, lo = f.lo == null ? 12 : f.lo;
+      var w = f.label.length * 6.2, h = 12;
+      function spot(tt, oo) {
+        var omt = 1 - tt;
+        var qx = omt * omt * pa[0] + 2 * omt * tt * cx2 + tt * tt * pb[0];
+        var qy = omt * omt * pa[1] + 2 * omt * tt * cy2 + tt * tt * pb[1];
+        return [qx + nx * oo, qy + ny * oo + 3];
+      }
+      function clear(pt) {
+        var r = { l: pt[0] - w / 2, r: pt[0] + w / 2, t: pt[1] - h, b: pt[1] + 2 };
+        return !obstacles.some(function (o) {
+          return r.l < o.r && r.r > o.l && r.t < o.b && r.b > o.t;
+        });
+      }
+      var tries = [[lt, lo], [lt, -lo], [lt + 0.12, lo], [lt - 0.12, lo], [lt + 0.12, -lo],
+                   [lt - 0.12, -lo], [lt + 0.24, lo * 1.6], [lt - 0.24, lo * 1.6], [lt, lo * 2.2],
+                   [lt, -lo * 2.2], [lt + 0.2, lo * 3], [lt - 0.2, lo * 3], [lt, -lo * 3.2], [lt, lo * 3.6], [lt, lo * 5], [lt, -lo * 5]];
+      var pt = spot(lt, lo);
+      for (var i = 0; i < tries.length; i++) {
+        var cand = spot(Math.min(0.9, Math.max(0.1, tries[i][0])), tries[i][1]);
+        if (clear(cand)) { pt = cand; break; }
+      }
+      obstacles.push({ l: pt[0] - w / 2, r: pt[0] + w / 2, t: pt[1] - h, b: pt[1] + 2 });
+      text.setAttribute("x", pt[0]); text.setAttribute("y", pt[1]);
+      text.textContent = f.label;
+      ge.appendChild(path); ge.appendChild(text); g.appendChild(ge);
+    });
+  }
+  btn.addEventListener("click", function () {
+    var on = frame.classList.toggle("flows-on");
+    btn.setAttribute("aria-pressed", on);
+    btn.textContent = on ? "flows · on" : "flows · off";
+    if (on) draw();
+  });
+  var t0;
+  window.addEventListener("resize", function () {
+    clearTimeout(t0);
+    t0 = setTimeout(function () { if (frame.classList.contains("flows-on")) draw(); }, 150);
+  });
+  proof.querySelectorAll(".unit").forEach(function (u) {
+    var key = ["axiom", "microcosm", "chronicle", "pe", "thesis", "corollary"].find(function (k) { return u.classList.contains(k); });
+    if (!key) return;
+    u.addEventListener("mouseenter", function () {
+      if (!frame.classList.contains("flows-on")) return;
+      overlay.setAttribute("data-focus", key);
+      overlay.querySelectorAll(".fedge").forEach(function (e) {
+        e.classList.toggle("on", e.getAttribute("data-ends").split(" ").indexOf(key) >= 0);
+      });
+    });
+    u.addEventListener("mouseleave", function () {
+      overlay.removeAttribute("data-focus");
+      overlay.querySelectorAll(".fedge.on").forEach(function (e) { e.classList.remove("on"); });
+    });
+  });
+})();
+</script></body></html>
