@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computable Belgian law — from statute to society</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2YHG89FY0N"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','G-2YHG89FY0N');</script>
+<style>
+  :root{--teal:#2C7A7B;--teal-dark:#285E61;--teal-soft:#E6FFFA;--ink:#101828;--sub:#475467;
+    --line:#E2E8F0;--bg:#FFFFFF;--red:#DC2626;--amber:#B45309;--muted:#F8FAFC}
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{font-family:'Inter',system-ui,sans-serif;background:#0E1726;color:var(--ink);overflow:hidden}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);
+    padding:56px 72px 64px}
+  .slide.on{display:flex}
+  .kicker{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+  h1{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-.02em}
+  h2{font-size:38px;font-weight:800;line-height:1.12;letter-spacing:-.015em;margin-bottom:22px}
+  .sub{font-size:20px;color:var(--sub);margin-top:16px;line-height:1.5;max-width:900px}
+  .grow{flex:1;display:flex;flex-direction:column;justify-content:center}
+  ul.big{list-style:none;display:flex;flex-direction:column;gap:16px;font-size:21px;line-height:1.45;max-width:1000px}
+  ul.big li{padding-left:26px;position:relative}
+  ul.big li::before{content:"";position:absolute;left:0;top:.55em;width:10px;height:10px;border-radius:3px;background:var(--teal)}
+  ul.big li.red::before{background:var(--red)}
+  b{font-weight:700}
+  .num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--teal-dark)}
+  .footer{position:absolute;left:72px;right:72px;bottom:22px;display:flex;justify-content:space-between;
+    font-size:12.5px;color:#98A2B3}
+  .stack{display:flex;flex-direction:column;gap:10px;max-width:980px}
+  .layer{border:1.5px solid var(--line);border-radius:10px;padding:14px 20px;display:flex;align-items:baseline;gap:14px;background:var(--muted)}
+  .layer .t{font-weight:700;font-size:19px;min-width:210px}
+  .layer .d{font-size:16.5px;color:var(--sub)}
+  .layer.hi{border-color:var(--teal);background:var(--teal-soft)}
+  .layer.theirs{border-style:dashed;border-color:var(--amber);background:#FFFBEB}
+  table{border-collapse:collapse;font-size:18px;max-width:980px}
+  th,td{text-align:left;padding:9px 20px 9px 0;border-bottom:1px solid var(--line)}
+  th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub)}
+  td.r{text-align:right;font-variant-numeric:tabular-nums}
+  .ok{color:var(--teal-dark);font-weight:700}.miss{color:var(--red);font-weight:700}
+  .cite{font-size:13px;color:#98A2B3;margin-top:18px;max-width:980px;line-height:1.5}
+  .urls{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+  .urls span{border:1.5px solid var(--line);border-radius:999px;padding:9px 20px;font-size:16.5px;font-weight:600;color:var(--teal-dark)}
+  .counter{position:absolute;right:72px;bottom:22px;font-size:12.5px;color:#98A2B3}
+</style>
+</head>
+<body>
+
+<section class="slide on">
+  <div class="grow">
+    <div class="kicker">CAPE × the Axiom Foundation × PolicyEngine · 24 August 2026</div>
+    <h1>Computable Belgian law,<br>from statute to society</h1>
+    <div class="sub">The law as open, cited, executable code — verified across engines, run over a population calibrated to the administration's own totals, and open at every layer.</div>
+    <div class="urls"><span>axiom.org/app?country=be</span><span>policyengine.org/be</span><span>microcosm.institute → calibration</span></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>One stack, and where each of us lives</h2>
+  <div class="grow"><div class="stack">
+    <div class="layer"><span class="t">Encode</span><span class="d">statute, regulation, circular → RuleSpec; every value cites its provision, every clause carries effective dates</span></div>
+    <div class="layer"><span class="t">Verify</span><span class="d">compile + tests + external oracles — the model that wrote the rules never grades its own work</span></div>
+    <div class="layer"><span class="t">Publish</span><span class="d">source text, encoding, verification record, computation graph — side by side, open</span></div>
+    <div class="layer hi"><span class="t">Populate</span><span class="d">Microcosm-BE: a population calibrated to published administrative facts, precision declared</span></div>
+    <div class="layer hi"><span class="t">Simulate</span><span class="d">household calculators and society-wide reform impacts on both engines</span></div>
+    <div class="layer theirs"><span class="t">Behaviour &amp; goals</span><span class="d">labour, consumption, transport, intra-household models — and goal-directed policy search — on top of a rules layer that is checkable</span></div>
+  </div></div>
+  <div class="cite">The bottom five layers are open infrastructure. The top layer is where BEAMM's research programme runs — a verified substrate makes behavioural modelling and optimization safe to build on.</div>
+</section>
+
+<section class="slide">
+  <h2>Encode — Belgium, live today</h2>
+  <div class="grow"><ul class="big">
+    <li><b><span class="num">123</span> Belgian rules</b> live in the Axiom App: personal income tax (CIR 92), employee social security, work bonus, GRAPA, social integration income, child benefit, special contribution.</li>
+    <li>Every clause is dated. The work bonus carries its <b>January vs February–December 2025</b> amounts; this morning's encoding of penal-fine décimes carries the <b>×8 → ×10</b> switch of 1 February 2026 from the law of 19 December 2025.</li>
+    <li>Sources beyond statute are first-class: the social-integration resource rules are encoded from the <b>royal decree</b>; circulars and doctrine are the same ingestion path — the structuring question is corpus design, and it is our daily work.</li>
+  </ul></div>
+  <div class="cite">axiom.org/app?country=be — statute text, encoding, tests, and computation graph in one place. Coverage grows; claims stay scoped to what is verified.</div>
+</section>
+
+<section class="slide">
+  <h2>Verify — cross-engine, case by case</h2>
+  <div class="grow"><ul class="big">
+    <li><b>EUROMOD BE_2025</b> as the working oracle: <span class="num">23</span> in-scope policies matched case by case, residuals attributed, zero unexplained.</li>
+    <li>The full ledger: every one of EUROMOD's <span class="num">558</span> output columns on a Belgian population — computed by both engines, classified <i>matched</i>, <i>explained with a named mechanism</i>, or <i>gap with an owner</i>.</li>
+    <li><span class="num">13</span> findings filed on the public EUROMOD tracker since July — verification flows back upstream.</li>
+    <li>Each additional engine sharpens all of them: administrative calculators and established Belgian models slot in as further oracles on the same harness.</li>
+  </ul></div>
+</section>
+
+<section class="slide">
+  <h2>Populate — calibrated to the administration's own totals</h2>
+  <div class="grow">
+    <table>
+      <tr><th>Concept</th><th>Truth (2025)</th><th>Axiom</th><th>EUROMOD</th></tr>
+      <tr><td>Net taxable income</td><td class="r">€293.7bn</td><td class="r ok">+1.6%</td><td class="r ok">+1.6%</td></tr>
+      <tr><td>Pensions</td><td class="r">€71.2bn</td><td class="r ok">+0.1%</td><td class="r ok">+0.1%</td></tr>
+      <tr><td>Unemployment recipients</td><td class="r">990.1k</td><td class="r ok">+0.2%</td><td class="r ok">+0.2%</td></tr>
+      <tr><td>Social assistance (RIS)</td><td class="r">€2.2bn</td><td class="r miss">+113.5%</td><td class="r miss">+379.9%</td></tr>
+      <tr><td>GRAPA</td><td class="r">€1.0bn</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td></tr>
+      <tr><td>Child benefits</td><td class="r">€8.6bn</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td></tr>
+    </table>
+    <div class="sub" style="margin-top:20px;font-size:18px"><span class="num">254</span> calibration targets — sums of published administrative facts (Statbel fiscal distribution by income class and decile, ONSS, SFPD, FPB) — <span class="num">242</span> within 5%. The misses are shown, named, and owned.</div>
+  </div>
+  <div class="cite">Microcosm-BE: synthetic Belgian population calibrated to Belgian administrative and national-accounts targets (sums of Chronicle facts; surveys validation-only). Support records: US survey donor pool, reweighted; a Belgian donor pool is the planned upgrade. Cross-engine agreement is evidence about the encodings.</div>
+</section>
+
+<section class="slide">
+  <h2>Divergence is signal, not failure</h2>
+  <div class="grow"><ul class="big">
+    <li>When a model misses the administration's totals, there are exactly three causes: <b>the model simplifies</b>, <b>the encoding is wrong</b>, or <b>reality differs from the written rule</b> — advance agreements, rulings, discretion.</li>
+    <li>The ledger separates the first two mechanically: two independent engines, per-case comparison, every residual attributed.</li>
+    <li>What remains — the gap between verified rules and administrative totals — becomes a <b>measurement of the third</b>: how far practice sits from the text. That is a research object no one can currently compute.</li>
+    <li>An overnight feasibility audit even proves which population misses are donor-structure, machine-checked — the specification for the Belgian microdata upgrade.</li>
+  </ul></div>
+</section>
+
+<section class="slide">
+  <h2>Simulate — society-wide, in the open</h2>
+  <div class="grow"><ul class="big">
+    <li><b>policyengine.org/be</b> — reform CIR 92 levers and watch revenue, Gini, poverty, winners and losers, and decile impacts move; a household tab shows net income and marginal rates across the wage distribution.</li>
+    <li>Every figure is computed by the Axiom rules engine from the cited encodings — nothing re-implemented in the page; the parameter set is widening (brackets, family increments, marital quotient, work bonus) with each value engine-computed.</li>
+    <li>Precision is declared on the page, not hidden behind it — the same culture as publishing the degree of precision of a synthetic-data release.</li>
+  </ul></div>
+</section>
+
+<section class="slide">
+  <h2>Beyond tax and benefits — encoded this morning</h2>
+  <div class="grow"><ul class="big">
+    <li><b>Penal:</b> the décimes-additionnels law — every criminal fine ×8 in January 2026, ×10 from 1 February; the amendment caught purely by effective dates, the evidence horizon stated.</li>
+    <li><b>Contract:</b> the statutory-interest formula of 1865 — computed from ECB Euribor inputs, it reproduces the SPF Finances published 4.50% for 2025 and 2026 to <b>zero basis points</b>. The administration's own publication is the oracle.</li>
+    <li>The computable core of each legal domain is the realistic first scope — and the interpretive boundary is exactly where a law faculty's review bench and test cases turn encodings into scholarship.</li>
+  </ul></div>
+</section>
+
+<section class="slide">
+  <h2>Getting started, concretely</h2>
+  <div class="grow"><ul class="big">
+    <li><b>Everything is open:</b> rulespec-be, axiom-oracles, axiom-corpus, microcosm, the calibration dashboard — clone today, verify any number on any slide.</li>
+    <li><b>The pilot recipe:</b> one quarter, one domain, one reviewer, one oracle, one published ledger of what matched and what did not.</li>
+    <li><b>PIT in depth:</b> corpus ingestion of the code plus circulars and doctrine; calibration against the administration's subtotals; every divergence attributed.</li>
+    <li><b>Data:</b> the population pipeline is an acceptance test — run it on SILC or administrative microdata inside your secure environment; the data never has to move.</li>
+    <li><b>The faculty's seat:</b> interpretive sign-off, doctrinal test cases, and the public benchmark for where computable law ends.</li>
+  </ul></div>
+</section>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;
+const counter=document.createElement('div');counter.className='counter';document.body.appendChild(counter);
+function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,j)=>s.classList.toggle('on',j===i));counter.textContent=(i+1)+' / '+slides.length}
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key))show(i+1);if(['ArrowLeft','PageUp'].includes(e.key))show(i-1)});
+addEventListener('click',e=>{show(e.clientX>innerWidth/3?i+1:i-1)});
+show(0);
+</script>
+</body>
+</html>
