@@ -204,7 +204,8 @@ const eur=x=>'€'+Math.round(x).toLocaleString('en-US');
 const eurB=x=>{const b=x/1e9;return (b>=0?'+':'−')+'€'+Math.abs(b).toFixed(2)+'B'};
 const pyf=x=>x===0?'0.0':String(x);
 let D=null, st={...BASE}, sweep=null, gross=45000, tab='society';
-fetch(new URL('data_v2.json', location.href.endsWith('/')?location.href:location.href+'/')).then(r=>r.json()).then(d=>{D=d;initSweeps();render()});
+const dataBase=(()=>{const u=new URL(location.href);u.search='';u.hash='';if(!u.pathname.endsWith('/'))u.pathname+='/';return u})();
+fetch(new URL('data_v2.json', dataBase)).then(r=>r.json()).then(d=>{D=d;initSweeps();render()});
 function metaOf(k){return D.parameter_metadata.find(m=>m.key===k)}
 function fmtVal(m,v){return m.kind==='decimal'?(v*100).toFixed(v*100%1?2:0)+'%':'\u20ac'+Math.round(v).toLocaleString('en-US')}
 function initSweeps(){
