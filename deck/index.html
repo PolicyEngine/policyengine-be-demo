@@ -109,17 +109,31 @@
 
 <section class="slide">
   <h2>Populate — calibrated to the administration's own totals</h2>
-  <div class="grow">
-    <table>
-      <tr><th>Concept</th><th>Truth (2025)</th><th>Axiom</th><th>EUROMOD</th></tr>
-      <tr><td>Net taxable income</td><td class="r">€293.7bn</td><td class="r ok">+1.6%</td><td class="r ok">+1.6%</td></tr>
-      <tr><td>Pensions</td><td class="r">€71.2bn</td><td class="r ok">+0.1%</td><td class="r ok">+0.1%</td></tr>
-      <tr><td>Unemployment recipients</td><td class="r">990.1k</td><td class="r ok">+0.2%</td><td class="r ok">+0.2%</td></tr>
-      <tr><td>Social assistance (RIS)</td><td class="r">€2.2bn</td><td class="r miss">+113.5%</td><td class="r miss">+379.9%</td></tr>
-      <tr><td>GRAPA</td><td class="r">€1.0bn</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td></tr>
-      <tr><td>Child benefits</td><td class="r">€8.6bn</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td></tr>
-    </table>
-    <div class="sub" style="margin-top:18px;font-size:18px"><span class="num">254</span> calibration targets — sums of published administrative facts (Statbel fiscal distribution by income class and decile, ONSS, SFPD, FPB) — <span class="num">242</span> within 5%. The misses are shown, named, and owned.</div>
+  <div class="grow" style="gap:20px">
+    <div>
+      <div class="kicker" style="margin-bottom:8px">Population vs truth — one series, measured once (calibration quality)</div>
+      <table class="dense">
+        <tr><th>Concept</th><th>Truth (2025)</th><th>Population</th>
+            <th style="padding-left:34px">Concept</th><th>Truth (2025)</th><th>Population</th></tr>
+        <tr><td>Net taxable income</td><td class="r">€293.7bn</td><td class="r ok">+1.6%</td>
+            <td style="padding-left:34px">Self-employment income</td><td class="r">€43.1bn</td><td class="r ok">+0.5%</td></tr>
+        <tr><td>Pensions</td><td class="r">€71.2bn</td><td class="r ok">+0.1%</td>
+            <td style="padding-left:34px">Movable income</td><td class="r">€40.2bn</td><td class="r ok">−0.1%</td></tr>
+        <tr><td>Unemployment recipients</td><td class="r">990.1k</td><td class="r ok">+0.2%</td>
+            <td style="padding-left:34px">Pension recipients</td><td class="r">2,674.5k</td><td class="r">+2.9%</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="kicker" style="margin-bottom:8px">Computed independently by each engine on that population</div>
+      <table class="dense">
+        <tr><th>Concept</th><th>Truth (2025)</th><th>Axiom</th><th>EUROMOD</th></tr>
+        <tr><td>Employee SSC</td><td class="r">€21.7bn</td><td class="r">+6.9%</td><td class="r">+6.9%</td></tr>
+        <tr><td>Social assistance (RIS)</td><td class="r">€2.2bn</td><td class="r miss">+113.5%</td><td class="r miss">+379.9%</td></tr>
+        <tr><td>GRAPA</td><td class="r">€1.0bn</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td></tr>
+        <tr><td>Child benefits</td><td class="r">€8.6bn</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td></tr>
+      </table>
+    </div>
+    <div class="sub" style="font-size:17px;margin-top:2px"><span class="num">254</span> targets — sums of published administrative facts — <span class="num">242</span> within 5%. Where the engine columns match on the top block it is because they share the series, not because two engines agree; the bottom block is where agreement means something.</div>
   </div>
   <div class="cite">Microcosm-BE: synthetic Belgian population calibrated to Belgian administrative and national-accounts targets (sums of Chronicle facts; surveys validation-only). Support records: US survey donor pool, reweighted; a Belgian donor pool is the planned upgrade. Cross-engine agreement is evidence about the encodings.</div>
 </section>
@@ -204,24 +218,25 @@
 </section>
 
 <section class="slide">
-  <h2>The full cross-engine table — v0.5, 2025</h2>
+  <h2>The full table — v0.5, 2025, with each row's basis</h2>
   <div class="grow">
-    <table style="font-size:14px" class="dense">
-      <tr><th>Concept</th><th>Truth 2025</th><th>Axiom</th><th>EUROMOD·Microcosm</th><th>EUROMOD·SILC (JRC)</th><th>Mechanism where it misses</th></tr>
-      <tr><td>Income tax</td><td class="r">€75.8bn</td><td class="r miss">−17.7%</td><td class="r miss">−17.1%</td><td class="r">+2.3%</td><td>concept conflict documented; decile system carries the tax concept</td></tr>
-      <tr><td>Employee SSC</td><td class="r">€21.7bn</td><td class="r">+6.9%</td><td class="r">+6.9%</td><td class="r miss">+33.2%</td><td>—</td></tr>
-      <tr><td>Net taxable income</td><td class="r">€293.7bn</td><td class="r ok">+1.6%</td><td class="r ok">+1.6%</td><td class="r">—</td><td>—</td></tr>
-      <tr><td>Self-employment income</td><td class="r">€43.1bn</td><td class="r ok">+0.5%</td><td class="r ok">+0.5%</td><td class="r miss">−44.9%</td><td>—</td></tr>
-      <tr><td>Movable income</td><td class="r">€40.2bn</td><td class="r ok">−0.1%</td><td class="r ok">−0.1%</td><td class="r">—</td><td>—</td></tr>
-      <tr><td>Pensions</td><td class="r">€71.2bn</td><td class="r ok">+0.1%</td><td class="r ok">+0.1%</td><td class="r miss">−11.8%</td><td>—</td></tr>
-      <tr><td>Pension recipients</td><td class="r">2,674.5k</td><td class="r">+2.9%</td><td class="r">+2.9%</td><td class="r miss">−12.1%</td><td>—</td></tr>
-      <tr><td>Unemployment benefits</td><td class="r">€6.5bn</td><td class="r miss">+84.5%</td><td class="r ok">+0.3%</td><td class="r miss">+79.8%</td><td>Axiom leg uses a first-month proxy construct — named, owned</td></tr>
-      <tr><td>Unemployment recipients</td><td class="r">990.1k</td><td class="r ok">+0.2%</td><td class="r ok">+0.2%</td><td class="r miss">+94.9%</td><td>—</td></tr>
-      <tr><td>Social assistance (RIS)</td><td class="r">€2.2bn</td><td class="r miss">+113.5%</td><td class="r miss">+379.9%</td><td class="r miss">−37.6%</td><td>means test rewired; take-up not yet modelled (rate documented, off)</td></tr>
-      <tr><td>GRAPA</td><td class="r">€1.0bn</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td><td class="r miss">−100.0%</td><td>donor pension distribution too uniform — donor-pool spec item</td></tr>
-      <tr><td>Child benefits</td><td class="r">€8.6bn</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td><td class="r miss">−13.1%</td><td>composition encoded 24 Aug; enters on next corpus release</td></tr>
+    <table style="font-size:13.5px" class="dense">
+      <tr><th>Concept</th><th>Truth 2025</th><th>Basis</th><th>Axiom</th><th>EUROMOD·Microcosm</th><th>EUROMOD·SILC (JRC)</th><th>Notes</th></tr>
+      <tr><td>Income tax</td><td class="r">€75.8bn</td><td>engine-computed</td><td class="r miss">−17.7%</td><td class="r miss">−17.1%</td><td class="r">+2.3%</td><td>concept conflict documented; decile system carries the tax concept</td></tr>
+      <tr><td>Employee SSC</td><td class="r">€21.7bn</td><td>engine-computed</td><td class="r">+6.9%</td><td class="r">+6.9%</td><td class="r miss">+33.2%</td><td>genuine two-engine agreement</td></tr>
+      <tr><td>Movable withholding</td><td class="r">€4.2bn</td><td>engine-computed</td><td class="r miss">+190.4%</td><td class="r miss">+190.4%</td><td class="r miss">−60.4%</td><td>withholding construct vs 2022 external level — under review</td></tr>
+      <tr><td>Unemployment benefits</td><td class="r">€6.5bn</td><td>engine-computed</td><td class="r miss">+84.5%</td><td class="r ok">+0.3%</td><td class="r miss">+79.8%</td><td>Axiom leg uses a first-month proxy construct — named, owned</td></tr>
+      <tr><td>Social assistance (RIS)</td><td class="r">€2.2bn</td><td>engine-computed</td><td class="r miss">+113.5%</td><td class="r miss">+379.9%</td><td class="r miss">−37.6%</td><td>means test rewired; take-up not yet modelled (rate documented, off)</td></tr>
+      <tr><td>GRAPA</td><td class="r">€1.0bn</td><td>engine-computed</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td><td class="r miss">−100.0%</td><td>donor pension distribution too uniform — donor-pool spec item</td></tr>
+      <tr><td>Child benefits</td><td class="r">€8.6bn</td><td>engine-computed</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td><td class="r miss">−13.1%</td><td>composition encoded 24 Aug; enters on next corpus release</td></tr>
+      <tr><td>Net taxable income</td><td class="r">€293.7bn</td><td>carried input</td><td class="r ok" colspan="2" style="text-align:center">+1.6% (one series)</td><td class="r">—</td><td>—</td></tr>
+      <tr><td>Self-employment income</td><td class="r">€43.1bn</td><td>carried input</td><td class="r ok" colspan="2" style="text-align:center">+0.5% (one series)</td><td class="r miss">−44.9%</td><td>—</td></tr>
+      <tr><td>Movable income</td><td class="r">€40.2bn</td><td>carried input</td><td class="r ok" colspan="2" style="text-align:center">−0.1% (one series)</td><td class="r">—</td><td>—</td></tr>
+      <tr><td>Pensions</td><td class="r">€71.2bn</td><td>carried input</td><td class="r ok" colspan="2" style="text-align:center">+0.1% (one series)</td><td class="r miss">−11.8%</td><td>—</td></tr>
+      <tr><td>Pension recipients</td><td class="r">2,674.5k</td><td>carried input</td><td class="r" colspan="2" style="text-align:center">+2.9% (one series)</td><td class="r miss">−12.1%</td><td>—</td></tr>
+      <tr><td>Unemployment recipients</td><td class="r">990.1k</td><td>carried input</td><td class="r ok" colspan="2" style="text-align:center">+0.2% (one series)</td><td class="r miss">+94.9%</td><td>—</td></tr>
     </table>
-    <div class="cite" style="margin-top:12px">Per-case exactness underneath the aggregates: couple PIT at €45k and €60k matched to the cent at the pinned engine (€3,484.26 and €7,548.60); the €30k case's −€813.31 attributed to the art. 289ter/1 credit. 23 policies on the scoreboard, zero unexplained residuals; 558 EUROMOD output columns classified; 13 findings filed upstream.</div>
+    <div class="cite" style="margin-top:10px">Carried-input rows measure the calibrated population against truth once — the engines share the series, so no cross-engine claim is made. Per-case exactness beneath the engine-computed rows: couple PIT at €45k and €60k matched to the cent (€3,484.26; €7,548.60); the €30k case's −€813.31 attributed to the art. 289ter/1 credit. 23 policies, zero unexplained residuals; 558 columns classified; 13 findings filed upstream.</div>
   </div>
 </section>
 
