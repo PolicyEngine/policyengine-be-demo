@@ -4,58 +4,130 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Computable Belgian law — from statute to society</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2YHG89FY0N"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','G-2YHG89FY0N');</script>
 <style>
-  :root{--teal:#2C7A7B;--teal-dark:#285E61;--teal-soft:#E6FFFA;--ink:#101828;--sub:#475467;
-    --line:#E2E8F0;--bg:#FFFFFF;--red:#DC2626;--amber:#B45309;--muted:#F8FAFC}
+  :root{--canvas:#FBFAF7;--paper:#FFFFFF;--section:#F2F0EA;
+    --border-soft:#D8D6D0;--border-strong:#BDBAB2;
+    --text-primary:#1C1E21;--text-secondary:#4A4D53;--text-tertiary:#6B6E76;
+    --accent:#A33B2A;--accent-strong:#7E2E21;--accent-subtle:#F5E8E5;
+    --serif:"STIX Two Text",Georgia,serif;--mono:"IBM Plex Mono",monospace;--sans:"IBM Plex Sans",system-ui,sans-serif}
   *{box-sizing:border-box;margin:0}
   html,body{height:100%}
-  body{font-family:'Inter',system-ui,sans-serif;background:#0E1726;color:var(--ink);overflow:hidden}
-  .slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);
-    padding:56px 72px 64px}
+  body{font-family:var(--serif);background:var(--canvas);color:var(--text-primary);overflow:hidden}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--canvas);padding:54px 76px 60px}
   .slide.on{display:flex}
-  .kicker{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
-  h1{font-size:52px;font-weight:800;line-height:1.08;letter-spacing:-.02em}
-  h2{font-size:38px;font-weight:800;line-height:1.12;letter-spacing:-.015em;margin-bottom:22px}
-  .sub{font-size:20px;color:var(--sub);margin-top:16px;line-height:1.5;max-width:900px}
-  .grow{flex:1;display:flex;flex-direction:column;justify-content:center}
-  ul.big{list-style:none;display:flex;flex-direction:column;gap:16px;font-size:21px;line-height:1.45;max-width:1000px}
-  ul.big li{padding-left:26px;position:relative}
-  ul.big li::before{content:"";position:absolute;left:0;top:.55em;width:10px;height:10px;border-radius:3px;background:var(--teal)}
-  ul.big li.red::before{background:var(--red)}
+  .kicker{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-size:54px;font-weight:600;line-height:1.06;letter-spacing:-.01em}
+  h2{font-size:36px;font-weight:600;line-height:1.12;margin-bottom:20px}
+  .sub{font-size:20.5px;color:var(--text-secondary);margin-top:18px;line-height:1.55;max-width:880px}
+  .grow{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+  ul.big{list-style:none;display:flex;flex-direction:column;gap:15px;font-size:20px;line-height:1.5;max-width:1010px}
+  ul.big li{padding-left:30px;position:relative}
+  ul.big li::before{content:"∴";position:absolute;left:0;top:.02em;color:var(--accent);font-size:.85em}
+  ul.big li.red::before{color:var(--accent-strong)}
   b{font-weight:700}
-  .num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--teal-dark)}
-  .footer{position:absolute;left:72px;right:72px;bottom:22px;display:flex;justify-content:space-between;
-    font-size:12.5px;color:#98A2B3}
-  .stack{display:flex;flex-direction:column;gap:10px;max-width:980px}
-  .layer{border:1.5px solid var(--line);border-radius:10px;padding:14px 20px;display:flex;align-items:baseline;gap:14px;background:var(--muted)}
-  .layer .t{font-weight:700;font-size:19px;min-width:210px}
-  .layer .d{font-size:16.5px;color:var(--sub)}
-  .layer.hi{border-color:var(--teal);background:var(--teal-soft)}
-  .layer.theirs{border-style:dashed;border-color:var(--amber);background:#FFFBEB}
-  table{border-collapse:collapse;font-size:18px;max-width:980px}
-  th,td{text-align:left;padding:9px 20px 9px 0;border-bottom:1px solid var(--line)}
-  table.dense th,table.dense td{padding:5px 14px 5px 0}
-  th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub)}
-  td.r{text-align:right;font-variant-numeric:tabular-nums}
-  .ok{color:var(--teal-dark);font-weight:700}.miss{color:var(--red);font-weight:700}
-  .cite{font-size:13px;color:#98A2B3;margin-top:18px;max-width:980px;line-height:1.5}
-  .urls{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
-  .urls span{border:1.5px solid var(--line);border-radius:999px;padding:9px 20px;font-size:16.5px;font-weight:600;color:var(--teal-dark)}
-  .counter{position:absolute;right:72px;bottom:22px;font-size:12.5px;color:#98A2B3}
+  .num{font-family:var(--mono);font-weight:600;font-size:.92em;color:var(--accent-strong)}
+  .footer,.counter{font-family:var(--mono);font-size:11.5px;color:var(--text-tertiary);letter-spacing:.04em}
+  .footer{position:absolute;left:76px;bottom:20px}
+  .counter{position:absolute;right:76px;bottom:20px}
+  .stack{display:flex;flex-direction:column;gap:9px;max-width:960px}
+  .layer{border:1px solid var(--border-soft);border-radius:8px;padding:12px 20px;display:flex;align-items:baseline;gap:16px;background:var(--paper)}
+  .layer .t{font-weight:700;font-size:19px;min-width:200px}
+  .layer .d{font-size:16px;color:var(--text-secondary);font-family:var(--sans)}
+  .layer.hi{border-color:var(--accent);background:var(--accent-subtle)}
+  .layer.theirs{border-style:dashed;border-color:var(--accent-strong);background:var(--section)}
+  table{border-collapse:collapse;font-size:17.5px;max-width:1000px}
+  th,td{text-align:left;padding:8px 18px 8px 0;border-bottom:1px solid var(--border-soft)}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-tertiary);font-weight:600}
+  td.r{text-align:right;font-family:var(--mono);font-size:.92em}
+  table.dense th,table.dense td{padding:4.5px 13px 4.5px 0}
+  .ok{color:var(--text-primary);font-weight:700}.miss{color:var(--accent);font-weight:700}
+  .cite{font-family:var(--sans);font-size:12.5px;color:var(--text-tertiary);margin-top:16px;max-width:1000px;line-height:1.55}
+  .urls{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+  .urls span{font-family:var(--mono);border:1px solid var(--border-strong);border-radius:999px;padding:8px 18px;font-size:14px;color:var(--accent-strong);background:var(--paper)}
+  .therefore{font-family:var(--serif);color:var(--accent)}
+  .const-wrap{position:absolute;right:40px;top:50%;transform:translateY(-50%);opacity:.95}
+  svg text{font-family:var(--mono);font-size:11px;letter-spacing:.12em;fill:var(--text-tertiary)}
+  svg .major{fill:var(--text-primary);font-weight:600}
 </style>
 </head>
 <body>
 
 <section class="slide on">
-  <div class="grow">
+  <div class="grow" style="max-width:56%">
     <div class="kicker">CAPE × the Axiom Foundation × PolicyEngine · 24 August 2026</div>
     <h1>Computable Belgian law,<br>from statute to society</h1>
     <div class="sub">The law as open, cited, executable code — verified across engines, run over a population calibrated to the administration's own totals, and open at every layer.</div>
-    <div class="urls"><span>axiom.org/app?country=be</span><span>policyengine.org/be</span><span>microcosm.institute → calibration</span></div>
+    <div class="urls"><span>axiom.org/app?country=be</span><span>policyengine.org/be</span></div>
   </div>
+  <div class="const-wrap">
+    <svg width="470" height="560" viewBox="0 0 470 560" aria-label="The constellation">
+      <g stroke="#BDBAB2" stroke-width="0.9">
+        <line x1="90" y1="70" x2="200" y2="130"/><line x1="200" y1="130" x2="150" y2="230"/>
+        <line x1="150" y1="230" x2="270" y2="270"/><line x1="270" y1="270" x2="380" y2="180"/>
+        <line x1="270" y1="270" x2="230" y2="380"/><line x1="230" y1="380" x2="340" y2="430"/>
+        <line x1="340" y1="430" x2="300" y2="510"/><line x1="90" y1="330" x2="230" y2="380" stroke-dasharray="3 4"/>
+      </g>
+      <g fill="#1C1E21">
+        <circle cx="90" cy="70" r="3.5"/><circle cx="200" cy="130" r="4.5"/>
+        <circle cx="150" cy="230" r="3.5"/><circle cx="380" cy="180" r="3"/>
+        <circle cx="270" cy="270" r="5.5"/><circle cx="230" cy="380" r="4.5"/>
+        <circle cx="300" cy="510" r="3.5"/>
+      </g>
+      <circle cx="340" cy="430" r="6" fill="#A33B2A"/>
+      <circle cx="90" cy="330" r="4" fill="none" stroke="#A33B2A" stroke-width="1.2" stroke-dasharray="2 3"/>
+      <g>
+        <text x="78" y="52">CORPUS</text><text x="212" y="122">RULESPEC</text>
+        <text x="60" y="252">ENGINE</text><text x="392" y="172">ORACLES</text>
+        <text x="284" y="262" class="major">CHRONICLE</text><text x="140" y="404">MICROCOSM</text>
+        <text x="354" y="422" class="major">POLICYENGINE</text><text x="256" y="534">SOCIETY</text>
+        <text x="24" y="312" fill="#A33B2A">BEAMM</text>
+      </g>
+      <text x="410" y="60" style="font-size:26px" fill="#A33B2A">∴</text>
+    </svg>
+  </div>
+  <div class="footer">Societal <span class="therefore">∴</span> Computation</div>
+</section>
+
+<section class="slide">
+  <h2>The constellation</h2>
+  <div class="grow" style="flex-direction:row;align-items:center;gap:48px">
+    <svg width="560" height="440" viewBox="0 0 560 440" aria-label="Pipeline constellation" style="flex-shrink:0">
+      <g stroke="#BDBAB2" stroke-width="1">
+        <line x1="60" y1="60" x2="180" y2="110"/><line x1="180" y1="110" x2="130" y2="210"/>
+        <line x1="130" y1="210" x2="280" y2="240"/><line x1="280" y1="240" x2="420" y2="140"/>
+        <line x1="280" y1="240" x2="250" y2="340"/><line x1="250" y1="340" x2="400" y2="370"/>
+        <line x1="60" y1="300" x2="250" y2="340" stroke-dasharray="3 4" stroke="#A33B2A"/>
+      </g>
+      <g fill="#1C1E21">
+        <circle cx="60" cy="60" r="4"/><circle cx="180" cy="110" r="5"/>
+        <circle cx="130" cy="210" r="4"/><circle cx="420" cy="140" r="3.5"/>
+        <circle cx="280" cy="240" r="6"/><circle cx="250" cy="340" r="5"/>
+      </g>
+      <circle cx="400" cy="370" r="6.5" fill="#A33B2A"/>
+      <circle cx="60" cy="300" r="4.5" fill="none" stroke="#A33B2A" stroke-width="1.3" stroke-dasharray="2 3"/>
+      <g>
+        <text x="48" y="42" class="major">CORPUS</text><text x="192" y="102" class="major">RULESPEC</text>
+        <text x="40" y="232" class="major">ENGINE</text><text x="432" y="132" class="major">ORACLES</text>
+        <text x="294" y="232" class="major">CHRONICLE</text><text x="160" y="364" class="major">MICROCOSM</text>
+        <text x="414" y="362" class="major">POLICYENGINE</text>
+        <text x="20" y="282" fill="#A33B2A" class="major">BEAMM</text>
+      </g>
+    </svg>
+    <ul class="big" style="font-size:18.5px;gap:12px">
+      <li><b>Corpus</b> — the source texts, hash-pinned: statute, decree, circular.</li>
+      <li><b>RuleSpec</b> — encodings; every value cites, every clause dated.</li>
+      <li><b>Engine + oracles</b> — execution, and the cross-checks that gate it.</li>
+      <li><b>Chronicle</b> — the open ledger of published administrative facts.</li>
+      <li><b>Microcosm</b> — populations calibrated to those facts, precision declared.</li>
+      <li><b>PolicyEngine</b> — the interfaces where people meet the computation.</li>
+      <li style="color:var(--accent-strong)"><b>BEAMM</b> joins by the dashed line — behaviour and goals on a checkable substrate.</li>
+    </ul>
+  </div>
+  <div class="footer">Computation about society — its rules, its people, its record, its futures — open, checkable, in public.</div>
 </section>
 
 <section class="slide">
@@ -103,7 +175,7 @@
       <tr><td>GRAPA</td><td class="r">€1.0bn</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td></tr>
       <tr><td>Child benefits</td><td class="r">€8.6bn</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td></tr>
     </table>
-    <div class="sub" style="margin-top:20px;font-size:18px"><span class="num">254</span> calibration targets — sums of published administrative facts (Statbel fiscal distribution by income class and decile, ONSS, SFPD, FPB) — <span class="num">242</span> within 5%. The misses are shown, named, and owned.</div>
+    <div class="sub" style="margin-top:18px;font-size:18px"><span class="num">254</span> calibration targets — sums of published administrative facts (Statbel fiscal distribution by income class and decile, ONSS, SFPD, FPB) — <span class="num">242</span> within 5%. The misses are shown, named, and owned.</div>
   </div>
   <div class="cite">Microcosm-BE: synthetic Belgian population calibrated to Belgian administrative and national-accounts targets (sums of Chronicle facts; surveys validation-only). Support records: US survey donor pool, reweighted; a Belgian donor pool is the planned upgrade. Cross-engine agreement is evidence about the encodings.</div>
 </section>
@@ -147,18 +219,18 @@
   </ul></div>
 </section>
 
-
 <section class="slide">
   <div class="grow">
     <div class="kicker">Appendix</div>
     <h1>The substance</h1>
     <div class="sub">Chronicle facts · the calibration surface · the encoded policy scope · the full cross-engine table. Every number verifiable in the open repos.</div>
   </div>
+  <div class="footer">Societal <span class="therefore">∴</span> Computation</div>
 </section>
 
 <section class="slide">
   <h2>Chronicle — the fact layer for Belgium</h2>
-  <div class="grow"><ul class="big" style="font-size:19px;gap:13px">
+  <div class="grow"><ul class="big" style="font-size:18.5px;gap:13px">
     <li><b>Doctrine:</b> a calibration target is a <b>sum of Chronicle facts</b> — published administrative and national-accounts records, each with source, period, unit, and provenance class. Surveys are validation-only. Aging is a <b>declared ratio of two published facts</b> (FPB outlook pairs), never a guessed uprate.</li>
     <li><b>Belgian packages, in the bundle now:</b> Statbel fiscal income distribution 2023 — <span class="num">14,600</span> facts (101 income classes × declarations and amounts, national and per region; decile and percentile tax masses with published band bounds; declaration types; professional-income composition) · FPB Economic Outlook 2026–2031 (June 2026) — <span class="num">1,000</span> facts across T01/T06/T07/T11/T17/T24 · Statbel population structure 2025 and 2026 · ONSS contributions · ONEM unemployment · SFPD pension caseload · Eurostat tax and social-protection aggregates and household accounts · NBB disposable income · JRC EUROMOD country-report statistics — <span class="num">90</span> facts.</li>
     <li><b>Scale:</b> the full Chronicle bundle spans <span class="num">171,836</span> facts across the US, UK, and Belgium — one ledger, one contract, per-record provenance enforced by CI.</li>
@@ -168,7 +240,7 @@
 
 <section class="slide">
   <h2>Microcosm-BE v0.5 — the 254-target surface</h2>
-  <div class="grow"><ul class="big" style="font-size:19px;gap:13px">
+  <div class="grow"><ul class="big" style="font-size:18.5px;gap:12px">
     <li><b>Fiscal distribution:</b> <span class="num">202</span> cells — 101 income classes × {declaration counts, net taxable income}, 2023 administrative levels aged to 2025 by declared FPB fact-ratios.</li>
     <li><b>Tax masses:</b> <span class="num">19</span> cells — decile 1–9 plus percentile 91–100 total tax, with the published band bounds scaled to 2025 on the same declared ratios; declaration types (joint / individual).</li>
     <li><b>Demographics and programs:</b> 18 age × sex × region cells (NUTS1); ONSS worker contributions; SFPD pension recipients; FPB program totals (unemployment, GRAPA, child benefit, pensions); Eurostat self-employment, movable income, household accounts.</li>
@@ -179,7 +251,7 @@
 
 <section class="slide">
   <h2>Axiom policy scope for Belgium today</h2>
-  <div class="grow"><ul class="big" style="font-size:19px;gap:12px">
+  <div class="grow"><ul class="big" style="font-size:18.5px;gap:12px">
     <li><b>Personal income tax (CIR 92):</b> brackets and base tax (art. 130), tax-free amounts and family increments (arts. 131–134), communal and agglomeration surcharges (arts. 465–468), the art. 145-series reductions (pension savings, employer shares, home security, development funds, gifts, domestic employees, childcare, adoption, legal-protection insurance), replacement-income reductions and phase-outs (arts. 147/151/152), credits (arts. 289bis/289ter/289ter/1), company-car benefit in kind.</li>
     <li><b>Social security:</b> employee contributions (art. 38 component rates), the work bonus with its 2025 mid-year regimes, the special contribution.</li>
     <li><b>Benefits:</b> GRAPA payable amount, social-integration income resource calculation (from the royal decree), child benefit base — with the full regional composition (cohort routing, rank, age and social supplements) encoded and EUROMOD-matched across a 432-case grid, entering on the next corpus release.</li>
@@ -190,7 +262,7 @@
 <section class="slide">
   <h2>The full cross-engine table — v0.5, 2025</h2>
   <div class="grow">
-    <table style="font-size:14.5px" class="dense">
+    <table style="font-size:14px" class="dense">
       <tr><th>Concept</th><th>Truth 2025</th><th>Axiom</th><th>EUROMOD·Microcosm</th><th>EUROMOD·SILC (JRC)</th><th>Mechanism where it misses</th></tr>
       <tr><td>Income tax</td><td class="r">€75.8bn</td><td class="r miss">−17.7%</td><td class="r miss">−17.1%</td><td class="r">+2.3%</td><td>concept conflict documented; decile system carries the tax concept</td></tr>
       <tr><td>Employee SSC</td><td class="r">€21.7bn</td><td class="r">+6.9%</td><td class="r">+6.9%</td><td class="r miss">+33.2%</td><td>—</td></tr>
@@ -205,7 +277,7 @@
       <tr><td>GRAPA</td><td class="r">€1.0bn</td><td class="r miss">−83.6%</td><td class="r miss">−100.0%</td><td class="r miss">−100.0%</td><td>donor pension distribution too uniform — donor-pool spec item</td></tr>
       <tr><td>Child benefits</td><td class="r">€8.6bn</td><td class="r miss">−46.2%</td><td class="r miss">−15.5%</td><td class="r miss">−13.1%</td><td>composition encoded 24 Aug; enters on next corpus release</td></tr>
     </table>
-    <div class="cite" style="margin-top:14px">Per-case exactness underneath the aggregates: couple PIT at €45k and €60k matched to the cent at the pinned engine (€3,484.26 and €7,548.60); the €30k case's −€813.31 attributed to the art. 289ter/1 credit. 23 policies on the scoreboard, zero unexplained residuals; 558 EUROMOD output columns classified; 13 findings filed upstream.</div>
+    <div class="cite" style="margin-top:12px">Per-case exactness underneath the aggregates: couple PIT at €45k and €60k matched to the cent at the pinned engine (€3,484.26 and €7,548.60); the €30k case's −€813.31 attributed to the art. 289ter/1 credit. 23 policies on the scoreboard, zero unexplained residuals; 558 EUROMOD output columns classified; 13 findings filed upstream.</div>
   </div>
 </section>
 
